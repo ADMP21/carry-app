@@ -458,8 +458,8 @@ button { font: inherit; color: inherit; }
 
 .stamp {
   position: absolute; top: 22px;
-  font-family: var(--font-mono); font-size: 20px; font-weight: 700; letter-spacing: .14em;
-  padding: 6px 14px; border-radius: 6px; border: 3px solid;
+  font-family: var(--font-mono); font-size: 15px; font-weight: 700; letter-spacing: .06em;
+  padding: 5px 12px; border-radius: 6px; border: 3px solid;
   pointer-events: none; z-index: 10; transition: opacity .1s;
 }
 .stamp.left  { left: 20px; color: var(--acc-resolved); border-color: var(--acc-resolved); }

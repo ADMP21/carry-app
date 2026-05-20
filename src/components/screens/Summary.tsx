@@ -117,8 +117,10 @@ export default function Summary({ state, onNav }: SummaryProps) {
             const r = resolved.filter(i => i.groupId === g.id).length
             const c = carried.filter(i => i.groupId === g.id).length
             const t = r + c
+            const resolvedPct = t ? Math.round((r / t) * 100) : 0
+            const unresolvedPct = t ? 100 - resolvedPct : 0
             return (
-              <div key={g.id} className="bar-row" style={{gridTemplateColumns:'140px 1fr 80px'}}>
+              <div key={g.id} className="bar-row" style={{gridTemplateColumns:'140px 1fr 130px'}}>
                 <div className="label" style={{display:'flex', alignItems:'center', gap:8}}>
                   <span style={{width:10, height:10, borderRadius:3, background:g.color, display:'inline-block', flexShrink:0}}/>
                   <span style={{fontSize:13}}>{g.name}</span>
@@ -127,7 +129,17 @@ export default function Summary({ state, onNav }: SummaryProps) {
                   <div style={{height:'100%', width: t ? `${(r/Math.max(1,t))*100}%` : 0, background:'var(--acc-resolved)'}}/>
                   <div style={{height:'100%', width: t ? `${(c/Math.max(1,t))*100}%` : 0, background:'var(--acc-carry)'}}/>
                 </div>
-                <div className="bar-val mono">{r} / {r+c}</div>
+                <div className="bar-val mono" style={{display:'flex', flexDirection:'column', alignItems:'flex-end', gap:2, lineHeight:1.2}}>
+                  <span style={{fontSize:12}}>{r} / {t}</span>
+                  {t > 0 && (
+                    <span style={{fontSize:10, letterSpacing:'.06em'}}>
+                      <span style={{color:'var(--acc-resolved)'}}>{resolvedPct}%</span>
+                      <span style={{color:'var(--fg-faint)'}}> · </span>
+                      <span style={{color:'var(--acc-carry)'}}>{unresolvedPct}%</span>
+                    </span>
+                  )}
+                  {t === 0 && <span style={{fontSize:10, color:'var(--fg-faint)'}}>—</span>}
+                </div>
               </div>
             )
           })}

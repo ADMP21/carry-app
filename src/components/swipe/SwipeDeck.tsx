@@ -204,8 +204,8 @@ export default function SwipeDeck({ issues, groupsById, currentMonth, onComplete
               >
                 {isTop && (
                   <>
-                    <div className="stamp left"  style={{opacity: stampLeftOp}}>DONE</div>
-                    <div className="stamp right" style={{opacity: stampRightOp}}>CARRY</div>
+                    <div className="stamp left"  style={{opacity: stampLeftOp}}>แก้ไขแล้ว</div>
+                    <div className="stamp right" style={{opacity: stampRightOp}}>ยังไม่ได้แก้ไข</div>
                   </>
                 )}
                 <div className="meta-overlay">
@@ -247,8 +247,8 @@ export default function SwipeDeck({ issues, groupsById, currentMonth, onComplete
           <button className="swipe-btn" onClick={onClose} title="Close"><span className="icon">✕</span></button>
         </div>
         <div className="swipe-hints mono">
-          <span className="kbd">←</span> Done &nbsp;·&nbsp;
-          <span className="kbd">→</span> Carry &nbsp;·&nbsp;
+          <span className="kbd">←</span> แก้ไขแล้ว &nbsp;·&nbsp;
+          <span className="kbd">→</span> ยังไม่ได้แก้ไข &nbsp;·&nbsp;
           <span className="kbd">⌘</span><span className="kbd">Z</span> Undo &nbsp;·&nbsp;
           <span className="kbd">Esc</span> Close
         </div>
