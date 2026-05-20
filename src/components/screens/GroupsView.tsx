@@ -41,15 +41,15 @@ export default function GroupsView({ state, onNav }: GroupsViewProps) {
                 <div className="group-stats">
                   <div>
                     <div className="group-stat-num">{open}</div>
-                    <div>Open</div>
+                    <div>รอดำเนินการ</div>
                   </div>
                   <div>
                     <div className="group-stat-num" style={{color:'var(--acc-carry)'}}>{carry}</div>
-                    <div>Carry</div>
+                    <div>ค้างข้าม</div>
                   </div>
                   <div>
                     <div className="group-stat-num" style={{color:'var(--acc-resolved)'}}>{resolved}</div>
-                    <div>Done</div>
+                    <div>เสร็จแล้ว</div>
                   </div>
                 </div>
               </div>
@@ -62,8 +62,8 @@ export default function GroupsView({ state, onNav }: GroupsViewProps) {
         <div className="row between" style={{marginBottom:14}}>
           <h3 className="section-title" style={{margin:0}}>
             {activeId
-              ? `Issues · ${groups.find(g => g.id === activeId)?.name}`
-              : 'All issues — ทุกกลุ่ม'
+              ? `ปัญหา · ${groups.find(g => g.id === activeId)?.name}`
+              : 'ปัญหาทั้งหมด — ทุกแผนก'
             }
           </h3>
           <div className="chips">

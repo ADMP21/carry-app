@@ -17,11 +17,11 @@ type RouteName = 'dashboard' | 'add' | 'groups' | 'summary' | 'history'
 interface Route { name: RouteName; arg?: string }
 
 const ROUTE_TITLES: Record<RouteName, { th: string; sub: (month: string, count?: number) => string }> = {
-  dashboard: { th: 'ภาพรวมประจำเดือน', sub: (m) => `DASHBOARD · ${monthLabel(m).toUpperCase()}` },
-  add:       { th: 'บันทึกปัญหาใหม่',   sub: (m) => `NEW ISSUE · ${monthLabel(m).toUpperCase()}` },
-  groups:    { th: 'ปัญหาตามกลุ่ม',      sub: (_, c) => `GROUPS · ${c} ACTIVE` },
-  summary:   { th: 'สรุปประจำเดือน',     sub: (m) => `SUMMARY · ${monthLabel(m).toUpperCase()}` },
-  history:   { th: 'ประวัติเคส',          sub: () => 'HISTORY · TIMELINE' },
+  dashboard: { th: 'ภาพรวมประจำเดือน', sub: (m) => `แผงควบคุม · ${monthLabel(m).toUpperCase()}` },
+  add:       { th: 'บันทึกปัญหาใหม่',   sub: (m) => `เพิ่มปัญหา · ${monthLabel(m).toUpperCase()}` },
+  groups:    { th: 'ปัญหาตามแผนก',       sub: (_, c) => `แผนก · ${c} แผนก` },
+  summary:   { th: 'สรุปประจำเดือน',     sub: (m) => `สรุป · ${monthLabel(m).toUpperCase()}` },
+  history:   { th: 'ประวัติปัญหา',        sub: () => 'ประวัติ · ไทม์ไลน์' },
 }
 
 const hasSupabase = !!(
@@ -126,10 +126,10 @@ export default function AppShell() {
               <h1>{title.th}</h1>
             </div>
             <div className="topbar-actions">
-              {route.name !== 'add' && <button className="btn btn-sm" onClick={() => nav('add')}>+ Add issue</button>}
-              {route.name !== 'dashboard' && <button className="btn btn-sm btn-ghost" onClick={() => nav('dashboard')}>← Dashboard</button>}
+              {route.name !== 'add' && <button className="btn btn-sm" onClick={() => nav('add')}>+ เพิ่มปัญหา</button>}
+              {route.name !== 'dashboard' && <button className="btn btn-sm btn-ghost" onClick={() => nav('dashboard')}>← แผงควบคุม</button>}
               <button className="btn btn-primary btn-sm" onClick={() => setReviewing(true)} disabled={openCount === 0}>
-                Review {openCount > 0 && <span className="mono" style={{ opacity:.7, marginLeft:4 }}>{openCount}</span>}
+                รีวิว {openCount > 0 && <span className="mono" style={{ opacity:.7, marginLeft:4 }}>{openCount}</span>}
               </button>
             </div>
           </header>

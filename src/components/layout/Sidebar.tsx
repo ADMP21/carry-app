@@ -38,33 +38,33 @@ export default function Sidebar({ state, route, onNav, onStartReview }: SidebarP
       </div>
 
       <div>
-        <div className="nav-group-label">workspace</div>
+        <div className="nav-group-label">หน้าหลัก</div>
         <nav className="nav">
-          <NavItem icon="◇" label="Dashboard"  active={route === 'dashboard'} onClick={() => onNav('dashboard')}/>
-          <NavItem icon="+" label="Add issue"  active={route === 'add'}       onClick={() => onNav('add')}/>
-          <NavItem icon="▤" label="Groups"     count={state.groups.length}    active={route === 'groups'}    onClick={() => onNav('groups')}/>
+          <NavItem icon="◇" label="แผงควบคุม"       active={route === 'dashboard'} onClick={() => onNav('dashboard')}/>
+          <NavItem icon="+" label="เพิ่มปัญหาใหม่"  active={route === 'add'}       onClick={() => onNav('add')}/>
+          <NavItem icon="▤" label="แผนก"             count={state.groups.length}    active={route === 'groups'}    onClick={() => onNav('groups')}/>
         </nav>
       </div>
 
       <div>
-        <div className="nav-group-label">reports</div>
+        <div className="nav-group-label">รายงาน</div>
         <nav className="nav">
-          <NavItem icon="∑" label="Monthly summary" active={route === 'summary'} onClick={() => onNav('summary')}/>
-          <NavItem icon="⟳" label="Issue history" count={state.issues.length}   active={route === 'history'} onClick={() => onNav('history')}/>
+          <NavItem icon="∑" label="สรุปประจำเดือน"  active={route === 'summary'} onClick={() => onNav('summary')}/>
+          <NavItem icon="⟳" label="ประวัติปัญหา"    count={state.issues.length}   active={route === 'history'} onClick={() => onNav('history')}/>
         </nav>
       </div>
 
       <div className="sidebar-footer">
-        <div className="label">current cycle</div>
+        <div className="label">รอบปัจจุบัน</div>
         <div className="month">{monthLabel(state.currentMonth)}</div>
-        <div className="meta">{openCount} open · ready to review</div>
+        <div className="meta">{openCount} รายการ · รอรีวิว</div>
         <button
           className="btn btn-primary"
           style={{ marginTop: 10, width: '100%', justifyContent: 'center' }}
           onClick={onStartReview}
           disabled={openCount === 0}
         >
-          Start review →
+          เริ่มรีวิว →
         </button>
       </div>
     </aside>

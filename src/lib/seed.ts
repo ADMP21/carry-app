@@ -2,34 +2,36 @@
 import type { Group, Issue } from '@/types'
 
 export const GROUPS: Group[] = [
-  { id: 'g_appliance', name: 'เครื่องใช้สำนักงาน', short: 'APPLIANCE', color: '#c97a3d', description: 'อุปกรณ์สำนักงานทั่วไป เช่น ปรินเตอร์ เครื่องชงกาแฟ' },
-  { id: 'g_furniture', name: 'เฟอร์นิเจอร์',       short: 'FURNITURE', color: '#7a6a8f', description: 'โต๊ะ เก้าอี้ ตู้ และของตกแต่งภายใน' },
-  { id: 'g_electric',  name: 'ระบบไฟฟ้า',          short: 'ELECTRIC',  color: '#d4a93d', description: 'หลอดไฟ ปลั๊ก เบรกเกอร์ และระบบไฟฟ้าทั่วไป' },
-  { id: 'g_plumbing',  name: 'ระบบประปา',          short: 'PLUMBING',  color: '#3d8bc9', description: 'ก๊อก ท่อ ห้องน้ำ และระบบน้ำ' },
-  { id: 'g_it',        name: 'IT & เครือข่าย',      short: 'IT',        color: '#3d9c7a', description: 'WiFi เครือข่าย คอมพิวเตอร์ และอุปกรณ์ไอที' },
+  { id: 'g_rm', name: 'แผนก RM', short: 'RM', color: '#c97a3d', description: 'Raw Materials — วัตถุดิบและส่วนผสมการผลิต' },
+  { id: 'g_pr', name: 'แผนก PR', short: 'PR', color: '#3d8bc9', description: 'Production — แผนกผลิต' },
+  { id: 'g_pa', name: 'แผนก PA', short: 'PA', color: '#7a6a8f', description: 'Packing — แผนกบรรจุภัณฑ์' },
+  { id: 'g_qc', name: 'แผนก QC', short: 'QC', color: '#3d9c7a', description: 'Quality Control — ควบคุมคุณภาพ' },
+  { id: 'g_mc', name: 'แผนก MC', short: 'MC', color: '#d4a93d', description: 'Maintenance — ซ่อมบำรุงเครื่องจักรและอาคาร' },
+  { id: 'g_hr', name: 'แผนก HR', short: 'HR', color: '#c94a6f', description: 'Human Resources — ทรัพยากรบุคคล' },
+  { id: 'g_st', name: 'แผนก ST', short: 'ST', color: '#4a9cc9', description: 'Store — คลังสินค้า' },
+  { id: 'g_cd', name: 'แผนก CD', short: 'CD', color: '#5a9a3d', description: 'Cold Storage — ห้องเย็นและจัดจำหน่าย' },
+  { id: 'g_oe', name: 'แผนก OE', short: 'OE', color: '#8b5e3c', description: 'Office & Engineering — สำนักงานและวิศวกรรม' },
 ]
 
 export const ISSUES: Issue[] = [
-  // Carry-overs
-  { id: 'i01', groupId: 'g_appliance', title: 'ปรินเตอร์ชั้น 3 หมึกหมดอีกแล้ว', description: 'เครื่อง HP ชั้น 3 ฝั่งบัญชี ขึ้นเตือนหมึกแดง พิมพ์เอกสารไม่ออก', photoSeed: 'PRINTER · FLOOR 3', status: 'pending', createdMonth: '2026-02', carryOverCount: 3, lastReviewMonth: '2026-04', reporter: 'พลอย ฝ่ายบัญชี' },
-  { id: 'i02', groupId: 'g_plumbing',  title: 'ก๊อกน้ำห้องครัวรั่วซึม', description: 'หยดน้ำตลอด แม้ปิดสนิท ใต้ซิงค์มีน้ำขัง', photoSeed: 'FAUCET · PANTRY', status: 'pending', createdMonth: '2026-03', carryOverCount: 2, lastReviewMonth: '2026-04', reporter: 'ตาล แม่บ้าน' },
-  { id: 'i03', groupId: 'g_electric',  title: 'หลอดไฟห้องประชุม A กระพริบ', description: 'หลอด LED 2 จุดกระพริบ สังเกตเห็นชัดในระหว่างประชุม', photoSeed: 'LIGHT · MEETING A', status: 'pending', createdMonth: '2026-03', carryOverCount: 2, lastReviewMonth: '2026-04', reporter: 'เอ ฝ่าย Ops' },
-  { id: 'i04', groupId: 'g_furniture', title: 'เก้าอี้ล็อบบี้ขาคลอน', description: 'เก้าอี้ตัวที่ 3 ขาหลังหลวม นั่งแล้วโยก ใช้งานต่อไม่ปลอดภัย', photoSeed: 'CHAIR · LOBBY', status: 'pending', createdMonth: '2026-04', carryOverCount: 1, lastReviewMonth: '2026-04', reporter: 'นิว Front Desk' },
-  { id: 'i05', groupId: 'g_it',        title: 'WiFi ชั้น 5 หลุดบ่อย', description: 'ตั้งแต่ 14:00 เป็นต้นไป SSID office-5F หลุดทุก 20 นาที', photoSeed: 'WIFI · FLOOR 5', status: 'pending', createdMonth: '2026-04', carryOverCount: 1, lastReviewMonth: '2026-04', reporter: 'ภัทร ฝ่ายดีไซน์' },
-  // New this month
-  { id: 'i06', groupId: 'g_appliance', title: 'เครื่องชงกาแฟไม่ทำงาน', description: 'กดปุ่มแล้วไฟติดแต่ไม่มีน้ำไหล ลองล้างถังแล้วก็ยังเหมือนเดิม', photoSeed: 'COFFEE MACHINE', status: 'pending', createdMonth: '2026-05', carryOverCount: 0, lastReviewMonth: null, reporter: 'หมิว ฝ่ายขาย' },
-  { id: 'i07', groupId: 'g_electric',  title: 'ปลั๊กผนังโต๊ะ 14 หลวม', description: 'เสียบ adapter แล้วหลุด ต้องเอาเทปแปะ เสี่ยงไฟลัดวงจร', photoSeed: 'OUTLET · DESK 14', status: 'pending', createdMonth: '2026-05', carryOverCount: 0, lastReviewMonth: null, reporter: 'ก้อง วิศวกร' },
-  { id: 'i08', groupId: 'g_plumbing',  title: 'โถปัสสาวะชายชั้น 2 ตัน', description: 'กดชักโครกแล้วน้ำไม่ลง ใช้งานไม่ได้เลย', photoSeed: 'WC · MEN · FLR 2', status: 'pending', createdMonth: '2026-05', carryOverCount: 0, lastReviewMonth: null, reporter: 'ฝ่ายอาคาร' },
-  { id: 'i09', groupId: 'g_furniture', title: 'ลิ้นชักโต๊ะรับแขกค้าง', description: 'ดึงออกไม่ได้ ปิดก็ไม่สนิท ของข้างในติดข้างใน', photoSeed: 'DRAWER · RECEPTION', status: 'pending', createdMonth: '2026-05', carryOverCount: 0, lastReviewMonth: null, reporter: 'พลอย Front Desk' },
-  { id: 'i10', groupId: 'g_it',        title: 'จอประชุมห้อง B ไม่รับสัญญาณ HDMI', description: 'เสียบสายแล้วขึ้น No Signal ต่อกับเครื่องอื่นก็ไม่ติด', photoSeed: 'MONITOR · ROOM B', status: 'pending', createdMonth: '2026-05', carryOverCount: 0, lastReviewMonth: null, reporter: 'ฟ้า ฝ่าย IT' },
-  { id: 'i11', groupId: 'g_appliance', title: 'ไมโครเวฟห้อง pantry มีกลิ่นไหม้', description: 'ทุกครั้งที่อุ่นอาหารจะมีกลิ่นไหม้ปนออกมา ภายในยังสะอาด', photoSeed: 'MICROWAVE', status: 'pending', createdMonth: '2026-05', carryOverCount: 0, lastReviewMonth: null, reporter: 'เจน ฝ่ายบุคคล' },
-  { id: 'i12', groupId: 'g_furniture', title: 'พรมหน้าห้องประชุม C เปื้อนกาแฟ', description: 'เปื้อนเป็นวงใหญ่ ลองเช็ดแล้วยังไม่ออก ขนาดประมาณ 30 ซม.', photoSeed: 'CARPET · STAIN', status: 'pending', createdMonth: '2026-05', carryOverCount: 0, lastReviewMonth: null, reporter: 'อาร์ม ฝ่ายดีไซน์' },
-  // Resolved history
-  { id: 'i90', groupId: 'g_electric',  title: 'เบรกเกอร์ห้อง server ทริปบ่อย', description: 'ฝ่ายอาคารเปลี่ยนเบรกเกอร์ใหม่แล้ว', photoSeed: 'BREAKER', status: 'resolved', createdMonth: '2026-03', carryOverCount: 1, lastReviewMonth: '2026-04', resolvedMonth: '2026-04', reporter: 'ก้อง วิศวกร' },
-  { id: 'i91', groupId: 'g_it',        title: 'VPN ของฝ่ายขายเชื่อมต่อไม่ได้', description: 'อัปเดตคอนฟิกผ่านระบบ MDM เรียบร้อย', photoSeed: 'VPN', status: 'resolved', createdMonth: '2026-04', carryOverCount: 0, lastReviewMonth: '2026-04', resolvedMonth: '2026-04', reporter: 'ฟ้า ฝ่าย IT' },
-  { id: 'i92', groupId: 'g_furniture', title: 'โต๊ะประชุมขาเสีย', description: 'ช่างเข้ามาเปลี่ยนน็อตและเสริมเหล็กยึด', photoSeed: 'TABLE · MEET', status: 'resolved', createdMonth: '2026-03', carryOverCount: 0, lastReviewMonth: '2026-03', resolvedMonth: '2026-03', reporter: 'เอ ฝ่าย Ops' },
-  { id: 'i93', groupId: 'g_plumbing',  title: 'อ่างล้างหน้าตัน', description: 'ใช้น้ำยาขจัดสิ่งอุดตัน', photoSeed: 'SINK', status: 'resolved', createdMonth: '2026-02', carryOverCount: 0, lastReviewMonth: '2026-02', resolvedMonth: '2026-02', reporter: 'ตาล แม่บ้าน' },
-  { id: 'i94', groupId: 'g_appliance', title: 'เครื่องถ่ายเอกสารกระดาษติด', description: 'ช่างมาบริการ และทำความสะอาดลูกกลิ้ง', photoSeed: 'COPIER', status: 'resolved', createdMonth: '2026-04', carryOverCount: 0, lastReviewMonth: '2026-04', resolvedMonth: '2026-04', reporter: 'พลอย ฝ่ายบัญชี' },
+  // Carry-overs (ปัญหาค้างจากเดือนก่อน)
+  { id: 'i01', groupId: 'g_mc', title: 'เครื่องแพ็คสินค้าสายที่ 2 ชำรุด',       description: 'ซีลถุงไม่สนิท สินค้าเสียหาย รอช่างจากบริษัทเข้ามาซ่อม',        photoSeed: 'PACKING LINE 2', status: 'pending',  createdMonth: '2026-02', carryOverCount: 3, lastReviewMonth: '2026-04', reporter: 'ฝ่าย MC' },
+  { id: 'i02', groupId: 'g_qc', title: 'เครื่องชั่งน้ำหนักไม่แม่นยำ',            description: 'ค่าคลาดเคลื่อน ±5g ส่งผลต่อ Net Weight สินค้า ต้องสอบเทียบ',   photoSeed: 'SCALE · QC',    status: 'pending',  createdMonth: '2026-03', carryOverCount: 2, lastReviewMonth: '2026-04', reporter: 'ฝ่าย QC' },
+  { id: 'i03', groupId: 'g_cd', title: 'ห้องเย็น Zone B อุณหภูมิสูงกว่ากำหนด', description: 'วัดได้ -15°C แต่ spec กำหนด -18°C แจ้งช่างแล้วยังไม่แก้ไข',    photoSeed: 'COLD ROOM B',   status: 'pending',  createdMonth: '2026-03', carryOverCount: 2, lastReviewMonth: '2026-04', reporter: 'ฝ่าย CD' },
+  { id: 'i04', groupId: 'g_pr', title: 'สายพานลำเลียงสายที่ 1 ตึงเกินไป',       description: 'สายพานส่งเสียงดัง เสี่ยงขาด ต้องปรับแรงตึงและหล่อลื่น',        photoSeed: 'CONVEYOR · L1', status: 'pending',  createdMonth: '2026-04', carryOverCount: 1, lastReviewMonth: '2026-04', reporter: 'ฝ่าย PR' },
+  { id: 'i05', groupId: 'g_st', title: 'ชั้นวางสินค้าโซน C หัก',                description: 'ชั้นที่ 3 รับน้ำหนักไม่ได้ สินค้าตกหล่น อันตราย',                photoSeed: 'SHELF · ZONE C',status: 'pending',  createdMonth: '2026-04', carryOverCount: 1, lastReviewMonth: '2026-04', reporter: 'ฝ่าย ST' },
+  // ปัญหาใหม่เดือนนี้
+  { id: 'i06', groupId: 'g_rm', title: 'วัตถุดิบล็อต A003 สีผิดปกติ',           description: 'สีคล้ำกว่าปกติ ยังไม่ผ่าน QC รอการตรวจสอบจากซัพพลายเออร์',    photoSeed: 'RM · LOT A003', status: 'pending',  createdMonth: '2026-05', carryOverCount: 0, lastReviewMonth: null, reporter: 'ฝ่าย RM' },
+  { id: 'i07', groupId: 'g_pa', title: 'กล่องบรรจุขนาด L ขาดสต็อก',             description: 'เหลือ 200 ใบ ต่ำกว่า min stock สั่งซื้อแล้วแต่ยังไม่ส่งมา',  photoSeed: 'BOX · SIZE L',  status: 'pending',  createdMonth: '2026-05', carryOverCount: 0, lastReviewMonth: null, reporter: 'ฝ่าย PA' },
+  { id: 'i08', groupId: 'g_mc', title: 'คอมเพรสเซอร์ห้องเย็นเสียงดังผิดปกติ',   description: 'ส่งเสียงกระทบทุก 10 นาที อาจเกิดจากน้ำแข็งสะสมในระบบ',       photoSeed: 'COMPRESSOR',    status: 'pending',  createdMonth: '2026-05', carryOverCount: 0, lastReviewMonth: null, reporter: 'ฝ่าย MC' },
+  { id: 'i09', groupId: 'g_hr', title: 'บัตรพนักงาน 3 ใบ เข้าประตูไม่ได้',      description: 'บัตร ID ของพนักงานสาย PR 3 คน สแกนไม่ผ่าน ต้องรีเซ็ตระบบ',   photoSeed: 'ACCESS CARD',   status: 'pending',  createdMonth: '2026-05', carryOverCount: 0, lastReviewMonth: null, reporter: 'ฝ่าย HR' },
+  { id: 'i10', groupId: 'g_oe', title: 'ปริ้นเตอร์ฝ่ายบัญชีหมึกหมด',            description: 'ใช้พิมพ์ใบส่งของไม่ได้ตั้งแต่เช้า กำลังรอหมึกสั่งมา',         photoSeed: 'PRINTER · ACC', status: 'pending',  createdMonth: '2026-05', carryOverCount: 0, lastReviewMonth: null, reporter: 'ฝ่าย OE' },
+  // ปิดเคสแล้ว (ประวัติ)
+  { id: 'i90', groupId: 'g_qc', title: 'เทอร์โมมิเตอร์ห้องเย็นแสดงผลผิด',      description: 'เปลี่ยนเซ็นเซอร์ใหม่และสอบเทียบเรียบร้อยแล้ว',                 photoSeed: 'THERMOMETER',   status: 'resolved', createdMonth: '2026-03', carryOverCount: 1, lastReviewMonth: '2026-04', resolvedMonth: '2026-04', reporter: 'ฝ่าย QC' },
+  { id: 'i91', groupId: 'g_pr', title: 'ปั๊มน้ำในกระบวนการผลิตรั่ว',             description: 'ช่างเปลี่ยน seal และทดสอบแรงดันผ่านแล้ว',                       photoSeed: 'PUMP · PROD',   status: 'resolved', createdMonth: '2026-04', carryOverCount: 0, lastReviewMonth: '2026-04', resolvedMonth: '2026-04', reporter: 'ฝ่าย PR' },
+  { id: 'i92', groupId: 'g_st', title: 'ระบบ barcode scanner ค้าง',               description: 'ติดตั้ง firmware ใหม่ ทดสอบสแกนผ่านครบทุกจุด',                 photoSeed: 'BARCODE',       status: 'resolved', createdMonth: '2026-03', carryOverCount: 0, lastReviewMonth: '2026-03', resolvedMonth: '2026-03', reporter: 'ฝ่าย ST' },
+  { id: 'i93', groupId: 'g_cd', title: 'รถขนส่งสินค้าคันที่ 2 แอร์เสีย',         description: 'ซ่อมแอร์เรียบร้อย ตรวจสอบระบบความเย็นผ่านมาตรฐาน',            photoSeed: 'TRUCK · COLD',  status: 'resolved', createdMonth: '2026-02', carryOverCount: 0, lastReviewMonth: '2026-02', resolvedMonth: '2026-02', reporter: 'ฝ่าย CD' },
+  { id: 'i94', groupId: 'g_pa', title: 'เครื่องพิมพ์วันหมดอายุหัวพิมพ์อุดตัน',  description: 'ล้างหัวพิมพ์ด้วยน้ำยาและทดสอบพิมพ์วันที่ผ่านแล้ว',            photoSeed: 'INKJET · DATE', status: 'resolved', createdMonth: '2026-04', carryOverCount: 0, lastReviewMonth: '2026-04', resolvedMonth: '2026-04', reporter: 'ฝ่าย PA' },
 ]
 
 export const CURRENT_MONTH = '2026-05'
