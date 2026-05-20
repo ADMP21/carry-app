@@ -12,12 +12,14 @@ interface PhotoTileProps {
 export default function PhotoTile({ seed, tone, idStr, label, imageUrl }: PhotoTileProps) {
   if (imageUrl) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={imageUrl}
-        alt={seed || 'Issue photo'}
-        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-      />
+      <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={imageUrl}
+          alt={seed || 'Issue photo'}
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        />
+      </div>
     )
   }
 
