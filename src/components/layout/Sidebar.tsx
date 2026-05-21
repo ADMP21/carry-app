@@ -31,7 +31,7 @@ export default function Sidebar({ state, route, onNav, onStartReview }: SidebarP
     <aside className="sidebar">
       <div className="brand">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo.png" alt="คปอ CM" className="brand-logo" />
+        <img src="/logo.webp" alt="คปอ CM" className="brand-logo" />
         <div className="brand-sub" style={{marginTop:2}}>issue review</div>
       </div>
 
