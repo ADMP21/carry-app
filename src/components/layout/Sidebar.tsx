@@ -30,11 +30,9 @@ export default function Sidebar({ state, route, onNav, onStartReview }: SidebarP
   return (
     <aside className="sidebar">
       <div className="brand">
-        <span className="brand-mark">C</span>
-        <div>
-          <div className="brand-name">Carry</div>
-          <div className="brand-sub">monthly issue review</div>
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo.png" alt="คปอ CM" className="brand-logo" />
+        <div className="brand-sub" style={{marginTop:2}}>issue review</div>
       </div>
 
       <div>
