@@ -3,6 +3,7 @@
 import { useReducer, useMemo, useState, useEffect, useCallback } from 'react'
 import { reducer } from '@/lib/reducer'
 import { GROUPS, ISSUES, CURRENT_MONTH } from '@/lib/seed'
+import { ACCIDENT_RECORDS } from '@/lib/seedAccidents'
 import { monthLabel } from '@/lib/utils'
 import Sidebar from '@/components/layout/Sidebar'
 import SwipeDeck from '@/components/swipe/SwipeDeck'
@@ -11,17 +12,21 @@ import AddIssue from '@/components/screens/AddIssue'
 import GroupsView from '@/components/screens/GroupsView'
 import Summary from '@/components/screens/Summary'
 import History from '@/components/screens/History'
+import AccidentStats from '@/components/screens/AccidentStats'
+import AddAccident from '@/components/screens/AddAccident'
 import type { ReviewResult } from '@/types'
 
-type RouteName = 'dashboard' | 'add' | 'groups' | 'summary' | 'history'
+type RouteName = 'dashboard' | 'add' | 'add-accident' | 'groups' | 'summary' | 'history' | 'accident-stats'
 interface Route { name: RouteName; arg?: string }
 
 const ROUTE_TITLES: Record<RouteName, { th: string; sub: (month: string, count?: number) => string }> = {
-  dashboard: { th: 'ภาพรวมประจำเดือน', sub: (m) => `แผงควบคุม · ${monthLabel(m).toUpperCase()}` },
-  add:       { th: 'บันทึกปัญหาใหม่',   sub: (m) => `เพิ่มปัญหา · ${monthLabel(m).toUpperCase()}` },
-  groups:    { th: 'ปัญหาตามแผนก',       sub: (_, c) => `แผนก · ${c} แผนก` },
-  summary:   { th: 'สรุปประจำเดือน',     sub: (m) => `สรุป · ${monthLabel(m).toUpperCase()}` },
-  history:   { th: 'ประวัติปัญหา',        sub: () => 'ประวัติ · ไทม์ไลน์' },
+  dashboard:        { th: 'ภาพรวมประจำเดือน',   sub: (m) => `แผงควบคุม · ${monthLabel(m).toUpperCase()}` },
+  add:              { th: 'เพิ่มปัญหาใหม่',       sub: (m) => `เพิ่มปัญหา · ${monthLabel(m).toUpperCase()}` },
+  'add-accident':   { th: 'บันทึกอุบัติเหตุ',     sub: (m) => `บันทึก · ${monthLabel(m).toUpperCase()}` },
+  groups:           { th: 'ปัญหาตามแผนก',          sub: (_, c) => `แผนก · ${c} แผนก` },
+  summary:          { th: 'สรุปประจำเดือน',        sub: (m) => `สรุป · ${monthLabel(m).toUpperCase()}` },
+  history:          { th: 'ประวัติปัญหา',           sub: () => 'ประวัติ · ไทม์ไลน์' },
+  'accident-stats': { th: 'สถิติประสบอันตราย',     sub: () => 'สถิติ · อุบัติเหตุ' },
 }
 
 const hasSupabase = !!(
@@ -34,6 +39,7 @@ export default function AppShell() {
     issues: ISSUES.map(i => ({ ...i })),
     groups: GROUPS.map(g => ({ ...g })),
     currentMonth: CURRENT_MONTH,
+    accidentRecords: ACCIDENT_RECORDS.map(r => ({ ...r })),
   })
 
   const [route, setRoute] = useState<Route>({ name: 'dashboard' })
@@ -134,11 +140,13 @@ export default function AppShell() {
             </div>
           </header>
           <div className="content">
-            {route.name === 'dashboard' && <Dashboard state={state} onStartReview={() => setReviewing(true)} onNav={nav} />}
-            {route.name === 'add'       && <AddIssue  state={state} dispatch={dispatch} onNav={nav} hasSupabase={hasSupabase} />}
-            {route.name === 'groups'    && <GroupsView state={state} onNav={nav} />}
-            {route.name === 'summary'   && <Summary   state={state} onNav={nav} />}
-            {route.name === 'history'   && <History   state={state} focusId={route.arg} onNav={nav} />}
+            {route.name === 'dashboard'       && <Dashboard     state={state} onStartReview={() => setReviewing(true)} onNav={nav} />}
+            {route.name === 'add'             && <AddIssue      state={state} dispatch={dispatch} onNav={nav} hasSupabase={hasSupabase} />}
+            {route.name === 'add-accident'    && <AddAccident   dispatch={dispatch} onNav={nav} />}
+            {route.name === 'groups'          && <GroupsView    state={state} onNav={nav} />}
+            {route.name === 'summary'         && <Summary       state={state} onNav={nav} />}
+            {route.name === 'history'         && <History       state={state} focusId={route.arg} onNav={nav} />}
+            {route.name === 'accident-stats'  && <AccidentStats state={state} />}
           </div>
         </main>
       </div>

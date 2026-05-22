@@ -3,9 +3,8 @@
 import { useState, useRef } from 'react'
 import type { AppState, AppAction } from '@/types'
 import { monthLabel } from '@/lib/utils'
-import PhotoTile from '@/components/ui/PhotoTile'
 
-type RouteName = 'dashboard' | 'add' | 'groups' | 'summary' | 'history'
+type RouteName = 'dashboard' | 'add' | 'add-accident' | 'groups' | 'summary' | 'history' | 'accident-stats'
 
 interface AddIssueProps {
   state:         AppState
@@ -25,7 +24,6 @@ export default function AddIssue({ state, dispatch, onNav, hasSupabase }: AddIss
   const [error,     setError]     = useState<string | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
 
-  const selectedGroup = groups.find(g => g.id === groupId)
   const canSave = title.trim() && desc.trim() && groupId && (file || preview)
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +46,6 @@ export default function AddIssue({ state, dispatch, onNav, hasSupabase }: AddIss
         photoUrl = await uploadIssuePhoto(file)
       }
       if (hasSupabase && photoUrl) {
-        // Save to Supabase then sync local
         const { createIssue } = await import('@/lib/supabase/queries')
         const newIssue = await createIssue({
           groupId, title, description: desc,
@@ -56,7 +53,6 @@ export default function AddIssue({ state, dispatch, onNav, hasSupabase }: AddIss
         })
         dispatch({ type: 'hydrate', groups: state.groups, issues: [newIssue, ...state.issues] } as never)
       } else {
-        // Local-only
         dispatch({
           type: 'add', title, desc, groupId,
           photoSeed: file?.name.toUpperCase() ?? 'OFFICE PHOTO',

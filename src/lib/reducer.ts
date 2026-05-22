@@ -1,5 +1,5 @@
 // src/lib/reducer.ts
-import type { AppState, AppAction } from '@/types'
+import type { AppState, AppAction, AccidentRecord } from '@/types'
 import type { Group, Issue } from '@/types'
 import { ISSUES } from './seed'
 
@@ -13,6 +13,14 @@ export function reducer(state: AppState, action: ExtendedAction): AppState {
         ...state,
         groups: action.groups,
         issues: action.issues,
+      }
+    }
+    case 'add_accident': {
+      const id = 'acc-' + String(Date.now()).slice(-8)
+      const record: AccidentRecord = { id, ...action.record }
+      return {
+        ...state,
+        accidentRecords: [record, ...state.accidentRecords],
       }
     }
     case 'add': {
@@ -49,7 +57,7 @@ export function reducer(state: AppState, action: ExtendedAction): AppState {
       return { ...state, issues: updated }
     }
     case 'reset_seed':
-      return { ...state, issues: ISSUES.map(i => ({ ...i })) }
+      return { ...state, issues: ISSUES.map(i => ({ ...i })), accidentRecords: [] }
     default:
       return state
   }
