@@ -5,22 +5,28 @@
 @tailwind utilities;
 
 :root {
-  --bg:         #f6f4ef;
+  /* === Instagram-inspired Light Theme === */
+  --bg:         #fafafa;
   --bg-elev:    #ffffff;
-  --bg-soft:    #efece5;
-  --bg-deep:    #1a1916;
-  --fg:         #1a1916;
-  --fg-soft:    #57534e;
-  --fg-faint:   #9c958b;
-  --line:       #e5e1d8;
-  --line-strong:#d6d1c4;
+  --bg-soft:    #f2f2f2;
+  --bg-deep:    #1a1a1a;
+  --fg:         #262626;
+  --fg-soft:    #737373;
+  --fg-faint:   #a8a8a8;
+  --line:       #dbdbdb;
+  --line-strong:#c7c7c7;
 
-  --acc-resolved:      oklch(0.62 0.14 145);
-  --acc-resolved-soft: oklch(0.94 0.04 145);
-  --acc-carry:         oklch(0.72 0.14 65);
-  --acc-carry-soft:    oklch(0.96 0.05 80);
-  --acc-critical:      oklch(0.6 0.18 25);
-  --acc-info:          oklch(0.55 0.13 250);
+  /* Status colours */
+  --acc-resolved:      #2ecc71;
+  --acc-resolved-soft: #e6faf0;
+  --acc-carry:         #f7931e;
+  --acc-carry-soft:    #fff4e6;
+  --acc-critical:      #ed4956;
+  --acc-info:          #0095f6;
+
+  /* Instagram iconic gradient */
+  --ig-grad: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcaf45 100%);
+  --ig-blue: #0095f6;
 
   --radius:    16px;
   --radius-sm: 10px;
@@ -30,21 +36,21 @@
   --font-body:    'Geist', 'IBM Plex Sans Thai', system-ui, sans-serif;
   --font-mono:    'Geist Mono', 'IBM Plex Mono', ui-monospace, monospace;
 
-  --shadow-card: 0 1px 0 rgba(20,18,15,.04), 0 12px 32px -16px rgba(20,18,15,.18);
-  --shadow-lift: 0 2px 0 rgba(20,18,15,.04), 0 28px 60px -28px rgba(20,18,15,.28);
+  --shadow-card: 0 0 0 1px rgba(0,0,0,.06), 0 4px 16px -4px rgba(0,0,0,.08);
+  --shadow-lift: 0 0 0 1px rgba(0,0,0,.06), 0 16px 40px -12px rgba(0,0,0,.14);
 }
 
 /* Dark theme */
 [data-theme="dark"] {
-  --bg:         #131210;
-  --bg-elev:    #1e1c19;
-  --bg-soft:    #252320;
-  --bg-deep:    #0a0908;
-  --fg:         #f5f1e8;
-  --fg-soft:    #a8a099;
-  --fg-faint:   #6b6560;
-  --line:       #2e2b27;
-  --line-strong:#3a3630;
+  --bg:         #121212;
+  --bg-elev:    #1e1e1e;
+  --bg-soft:    #262626;
+  --bg-deep:    #000000;
+  --fg:         #ffffff;
+  --fg-soft:    #a8a8a8;
+  --fg-faint:   #737373;
+  --line:       #363636;
+  --line-strong:#404040;
 }
 [data-theme="editorial"] {
   --bg:         #ecead9;
@@ -109,16 +115,25 @@ button { font: inherit; color: inherit; }
 
 /* === Sidebar === */
 .sidebar {
-  background: var(--bg-soft);
+  background: var(--bg-elev);
   border-right: 1px solid var(--line);
-  padding: 22px 18px;
+  padding: 0 18px 22px;
   display: flex; flex-direction: column; gap: 24px;
   position: sticky; top: 0; height: 100vh;
   overflow-y: auto;
 }
+/* Instagram gradient top bar on sidebar */
+.sidebar::before {
+  content: '';
+  display: block;
+  height: 3px;
+  background: var(--ig-grad);
+  margin: 0 -18px 22px;
+  flex-shrink: 0;
+}
 .brand { display: flex; align-items: center; gap: 10px; }
 .brand-logo {
-  width: 90px; height: auto;
+  width: 110px; height: auto;
   flex-shrink: 0;
   display: block;
 }
@@ -139,8 +154,8 @@ button { font: inherit; color: inherit; }
   transition: background .1s ease, color .1s ease;
   width: 100%;
 }
-.nav-item:hover { background: var(--line); color: var(--fg); }
-.nav-item.is-active { background: var(--bg-elev); color: var(--fg); font-weight: 500; box-shadow: var(--shadow-card); }
+.nav-item:hover { background: var(--bg-soft); color: var(--fg); }
+.nav-item.is-active { background: #e8f4fe; color: var(--ig-blue); font-weight: 600; }
 .nav-count { margin-left: auto; background: var(--line); border-radius: 99px; padding: 1px 7px; font-size: 10px; }
 
 .sidebar-footer {
@@ -188,9 +203,9 @@ button { font: inherit; color: inherit; }
 .btn-ghost { border-color: transparent; background: transparent; }
 .btn-ghost:hover { background: var(--bg-soft); border-color: var(--line); }
 .btn-primary {
-  background: var(--fg); color: var(--bg); border-color: var(--fg);
+  background: var(--ig-blue); color: #fff; border-color: var(--ig-blue);
 }
-.btn-primary:hover { background: var(--fg-soft); border-color: var(--fg-soft); }
+.btn-primary:hover { background: #1aa1f7; border-color: #1aa1f7; }
 
 /* === Cards === */
 .card {
@@ -221,14 +236,16 @@ button { font: inherit; color: inherit; }
 
 /* === Review CTA === */
 .review-cta {
-  background: var(--fg);
-  color: var(--bg);
+  background: var(--ig-grad);
+  color: #fff;
   border-radius: var(--radius);
   padding: 22px 24px;
   display: flex; align-items: center; justify-content: space-between;
   gap: 16px;
   margin-bottom: 20px;
   position: relative; overflow: hidden;
+  border: none;
+  box-shadow: 0 8px 32px -8px rgba(131,58,180,.35);
 }
 .review-cta-title { font-family: var(--font-display); font-size: 22px; font-weight: 600; letter-spacing: -.02em; margin: 0; }
 .review-cta-sub   { font-size: 12px; opacity: .65; margin: 4px 0 0; }
