@@ -459,8 +459,14 @@ button { font: inherit; color: inherit; }
   box-shadow: var(--shadow-lift);
   cursor: grab;
   user-select: none;
-  transition: box-shadow .2s;
+  /* transform transition ใช้สำหรับ behind cards animate เข้า-ออก
+     ระหว่าง drag ตัว top card จะ override ด้วย style.transition='none' */
+  transition: box-shadow .2s, transform .32s cubic-bezier(0.22,0.61,0.36,1);
   display: flex; flex-direction: column; overflow: hidden;
+  /* GPU layer: browser จะ composite card แยกจากหน้า */
+  will-change: transform;
+  /* isolation ป้องกัน stacking context leak */
+  isolation: isolate;
 }
 .swipe-card:active { cursor: grabbing; }
 .swipe-card.dragging { box-shadow: 0 32px 80px -20px rgba(0,0,0,.35); }

@@ -89,17 +89,13 @@ export default function WaxSeal({ variant, opacity }: { variant: Variant; opacit
           <feComposite operator="in" in="warped" in2="emask"/>
         </filter>
 
-        {/* ── Filter B: white-halo สำหรับตัวหนังสือให้อ่านง่ายบนรูปใดก็ได้ ── */}
-        <filter id={`hl-${id}`} x="-15%" y="-30%" width="130%" height="160%"
+        {/* ── Filter B: white-halo (GPU only — ไม่ใช้ feMorphology CPU) ── */}
+        <filter id={`hl-${id}`} x="-20%" y="-40%" width="140%" height="180%"
           colorInterpolationFilters="sRGB">
-          {/* ขยาย alpha ออกไปก่อน */}
-          <feMorphology in="SourceAlpha" operator="dilate" radius="3" result="fat"/>
-          {/* blur เบาๆ */}
-          <feGaussianBlur in="fat" stdDeviation="2" result="hblur"/>
-          {/* ระบายสีขาวใส่ halo */}
-          <feFlood floodColor="white" floodOpacity="0.85" result="wh"/>
+          {/* feGaussianBlur บน alpha channel → GPU-accelerated ใน Chrome/Firefox */}
+          <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="hblur"/>
+          <feFlood floodColor="white" floodOpacity="0.9" result="wh"/>
           <feComposite in="wh" in2="hblur" operator="in" result="halo"/>
-          {/* วางข้อความทับบน halo */}
           <feMerge>
             <feMergeNode in="halo"/>
             <feMergeNode in="SourceGraphic"/>

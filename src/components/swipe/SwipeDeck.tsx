@@ -268,18 +268,31 @@ export default function SwipeDeck({ issues, groupsById, currentMonth, onComplete
                 onMouseDown={isTop ? startDrag      : undefined}
                 onTouchStart={isTop ? startTouchDrag : undefined}
                 style={isTop ? {
-                  willChange:  'transform',   // GPU layer promotion
-                  touchAction: 'none',        // ป้องกัน browser scroll interrupt
+                  touchAction: 'none',   // ป้องกัน browser scroll interrupt
                   cursor:      'grab',
-                } : undefined}
+                  // will-change: transform อยู่ใน CSS แล้ว
+                } : {
+                  // behind cards: CSS มี will-change:transform แล้ว
+                  // pointer-events ปิดเพื่อลด hit-test cost
+                  pointerEvents: 'none',
+                }}
               >
-                {/* Stamps — opacity controlled via wrapper ref, WaxSeal ไม่ re-render ระหว่าง drag */}
+                {/* Stamps — ทั้งสองมี will-change:opacity = GPU layer แยกตัว
+                    เปลี่ยน opacity ไม่ repaint card texture เลย            */}
                 {isTop && (
                   <>
-                    <div ref={sealLRef} style={{ opacity: 0, pointerEvents: 'none' }}>
+                    <div ref={sealLRef} style={{
+                      opacity: 0, pointerEvents: 'none',
+                      willChange: 'opacity',            // ← GPU layer แยก
+                      contain: 'layout paint style',    // ← isolate repaint
+                    }}>
                       <WaxSeal variant="resolved" opacity={1}/>
                     </div>
-                    <div ref={sealRRef} style={{ opacity: 0, pointerEvents: 'none' }}>
+                    <div ref={sealRRef} style={{
+                      opacity: 0, pointerEvents: 'none',
+                      willChange: 'opacity',
+                      contain: 'layout paint style',
+                    }}>
                       <WaxSeal variant="carry" opacity={1}/>
                     </div>
                   </>
