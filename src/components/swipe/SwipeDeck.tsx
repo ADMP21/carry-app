@@ -283,15 +283,13 @@ export default function SwipeDeck({ issues, groupsById, currentMonth, onComplete
                   <>
                     <div ref={sealLRef} style={{
                       opacity: 0, pointerEvents: 'none',
-                      willChange: 'opacity',            // ← GPU layer แยก
-                      contain: 'layout paint style',    // ← isolate repaint
+                      willChange: 'opacity',   // GPU layer แยก — ไม่ repaint card texture
                     }}>
                       <WaxSeal variant="resolved" opacity={1}/>
                     </div>
                     <div ref={sealRRef} style={{
                       opacity: 0, pointerEvents: 'none',
                       willChange: 'opacity',
-                      contain: 'layout paint style',
                     }}>
                       <WaxSeal variant="carry" opacity={1}/>
                     </div>
