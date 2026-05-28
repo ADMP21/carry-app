@@ -116,26 +116,26 @@ export default function SwipeDeck({ issues, groupsById, currentMonth, onComplete
       <div className="swipe-stage">
         <div className="swipe-top">
           <div className="swipe-progress mono">
-            <span>REVIEW · {monthLabel(currentMonth)}</span>
+            <span>รีวิว · {monthLabel(currentMonth)}</span>
             <span className="faint">·</span>
-            <span className="faint">complete</span>
+            <span className="faint">เสร็จแล้ว</span>
           </div>
-          <button className="btn btn-ghost btn-sm" onClick={onClose}>✕ Close</button>
+          <button className="btn btn-ghost btn-sm" onClick={onClose}>✕ ปิด</button>
         </div>
         <div className="swipe-board">
           <div className="swipe-done">
-            <div className="mono faint" style={{letterSpacing:'.14em', textTransform:'uppercase', fontSize:11}}>Review complete</div>
+            <div className="mono faint" style={{letterSpacing:'.08em', fontSize:11}}>รีวิวเสร็จสมบูรณ์</div>
             <h2 style={{marginTop:8}}>เคลียร์ครบแล้ว ✓</h2>
             <p>คุณรีวิวปัญหา {total} รายการของเดือน {monthLabel(currentMonth)} เสร็จเรียบร้อย</p>
             <div className="stats">
               <div className="kpi" style={{padding:'16px'}}>
                 <div className="kpi-accent" style={{background:'var(--acc-resolved)'}}/>
-                <div className="kpi-label">Resolved</div>
+                <div className="kpi-label">แก้ไขแล้ว</div>
                 <div className="kpi-value" style={{fontSize:36}}>{resolvedCount}</div>
               </div>
               <div className="kpi" style={{padding:'16px'}}>
                 <div className="kpi-accent" style={{background:'var(--acc-carry)'}}/>
-                <div className="kpi-label">Carry over</div>
+                <div className="kpi-label">ยังไม่ได้แก้ไข</div>
                 <div className="kpi-value" style={{fontSize:36}}>{carryCount}</div>
               </div>
             </div>
@@ -167,7 +167,7 @@ export default function SwipeDeck({ issues, groupsById, currentMonth, onComplete
     <div className="swipe-stage">
       <div className="swipe-top">
         <div className="swipe-progress mono">
-          <span>REVIEW · {monthLabel(currentMonth)}</span>
+          <span>รีวิว · {monthLabel(currentMonth)}</span>
           <span className="faint">·</span>
           <span>{reviewedCount + 1} / {total}</span>
           <div className="progress-pill" style={{marginLeft:14}}>
@@ -177,8 +177,8 @@ export default function SwipeDeck({ issues, groupsById, currentMonth, onComplete
           </div>
         </div>
         <div className="row tight">
-          <button className="btn btn-ghost btn-sm" onClick={undo} disabled={reviewed.length === 0}>↶ Undo</button>
-          <button className="btn btn-ghost btn-sm" onClick={onClose}>✕ Close</button>
+          <button className="btn btn-ghost btn-sm" onClick={undo} disabled={reviewed.length === 0}>↶ ย้อนกลับ</button>
+          <button className="btn btn-ghost btn-sm" onClick={onClose}>✕ ปิด</button>
         </div>
       </div>
 
@@ -211,11 +211,11 @@ export default function SwipeDeck({ issues, groupsById, currentMonth, onComplete
                 <div className="meta-overlay">
                   <span className="tag" style={{'--tone': g.color} as React.CSSProperties}>{g.short}</span>
                   {issue.carryOverCount > 0 && (
-                    <span className="tag carry"><span className="dot"/>CARRIED ×{issue.carryOverCount}</span>
+                    <span className="tag carry"><span className="dot"/>ค้างมา ×{issue.carryOverCount}</span>
                   )}
                 </div>
                 <div className="photo">
-                  <PhotoTile seed={issue.photoSeed} tone={g.color} idStr={`#${issue.id.toUpperCase()}`} label={`CREATED ${issue.createdMonth}`} imageUrl={issue.photoUrl}/>
+                  <PhotoTile seed={issue.photoSeed} tone={g.color} idStr={`#${issue.id.toUpperCase()}`} label={`บันทึก ${issue.createdMonth}`} imageUrl={issue.photoUrl}/>
                 </div>
                 <div className="body">
                   <h2>{issue.title}</h2>
@@ -233,24 +233,24 @@ export default function SwipeDeck({ issues, groupsById, currentMonth, onComplete
 
       <div className="swipe-bottom">
         <div className="swipe-actions">
-          <button className="swipe-btn" onClick={undo} title="Undo" disabled={reviewed.length === 0}><span className="icon">↶</span></button>
-          <button className="swipe-btn done lg" onClick={() => commit('resolved')} title="Done (swipe left)">
+          <button className="swipe-btn" onClick={undo} title="ย้อนกลับ" disabled={reviewed.length === 0}><span className="icon">↶</span></button>
+          <button className="swipe-btn done lg" onClick={() => commit('resolved')} title="แก้ไขแล้ว (ปัดซ้าย)">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20 6L9 17l-5-5"/>
             </svg>
           </button>
-          <button className="swipe-btn carry lg" onClick={() => commit('carry')} title="Carry over (swipe right)">
+          <button className="swipe-btn carry lg" onClick={() => commit('carry')} title="ยังไม่แก้ไข (ปัดขวา)">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M13 6l6 6-6 6"/>
             </svg>
           </button>
-          <button className="swipe-btn" onClick={onClose} title="Close"><span className="icon">✕</span></button>
+          <button className="swipe-btn" onClick={onClose} title="ปิด"><span className="icon">✕</span></button>
         </div>
         <div className="swipe-hints mono">
           <span className="kbd">←</span> แก้ไขแล้ว &nbsp;·&nbsp;
           <span className="kbd">→</span> ยังไม่ได้แก้ไข &nbsp;·&nbsp;
-          <span className="kbd">⌘</span><span className="kbd">Z</span> Undo &nbsp;·&nbsp;
-          <span className="kbd">Esc</span> Close
+          <span className="kbd">⌘</span><span className="kbd">Z</span> ย้อนกลับ &nbsp;·&nbsp;
+          <span className="kbd">Esc</span> ปิด
         </div>
       </div>
     </div>

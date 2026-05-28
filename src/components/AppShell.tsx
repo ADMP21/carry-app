@@ -62,7 +62,7 @@ export default function AppShell() {
         }
       } catch (err) {
         if (!cancelled) {
-          console.warn('Supabase load failed, using seed data:', err)
+          console.warn('Supabase โหลดไม่สำเร็จ ใช้ข้อมูลตัวอย่างแทน:', err)
           setDbError('ไม่สามารถเชื่อมต่อ Supabase — ใช้ข้อมูลตัวอย่างแทน')
         }
       } finally {
@@ -105,7 +105,7 @@ export default function AppShell() {
     return (
       <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', flexDirection:'column', gap:16, background:'var(--bg)' }}>
         <div style={{ width:36, height:36, background:'var(--fg)', borderRadius:9, display:'flex', alignItems:'center', justifyContent:'center', color:'var(--bg)', fontFamily:'var(--font-mono)', fontWeight:600, fontSize:18 }}>C</div>
-        <div className="mono faint" style={{ fontSize:11, letterSpacing:'.14em', textTransform:'uppercase' }}>Loading…</div>
+        <div className="mono faint" style={{ fontSize:11, letterSpacing:'.08em' }}>กำลังโหลด…</div>
       </div>
     )
   }
@@ -120,7 +120,7 @@ export default function AppShell() {
       )}
       {isSaving && (
         <div style={{ position:'fixed', bottom:20, right:20, zIndex:200, background:'var(--fg)', color:'var(--bg)', padding:'8px 16px', borderRadius:8, fontSize:12, fontFamily:'var(--font-mono)' }}>
-          Saving…
+          กำลังบันทึก…
         </div>
       )}
       <div className="app">

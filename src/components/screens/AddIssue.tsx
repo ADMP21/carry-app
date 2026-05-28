@@ -61,7 +61,7 @@ export default function AddIssue({ state, dispatch, onNav, hasSupabase }: AddIss
       }
       onNav('dashboard')
     } catch (err) {
-      setError('บันทึกไม่สำเร็จ: ' + (err instanceof Error ? err.message : 'unknown error'))
+      setError('บันทึกไม่สำเร็จ: ' + (err instanceof Error ? err.message : 'ข้อผิดพลาดที่ไม่ทราบสาเหตุ'))
     } finally {
       setUploading(false)
     }
@@ -82,7 +82,7 @@ export default function AddIssue({ state, dispatch, onNav, hasSupabase }: AddIss
             <>
               <div className="dropzone-icon">↑</div>
               <div className="dropzone-text">ลากรูปมาวาง หรือคลิกเพื่ออัปโหลด</div>
-              <div className="dropzone-sub mono">JPG / PNG · UP TO 8 MB</div>
+              <div className="dropzone-sub mono">JPG / PNG · ขนาดไม่เกิน 8 MB</div>
             </>
           )}
         </div>
@@ -99,7 +99,7 @@ export default function AddIssue({ state, dispatch, onNav, hasSupabase }: AddIss
           </div>
         )}
         <div className="mono faint" style={{ fontSize:11, marginTop:10, letterSpacing:'.06em' }}>
-          * อย่างน้อย 1 ภาพ ตาม SPEC §10
+          * แนบรูปภาพอย่างน้อย 1 รูป
         </div>
         {error && (
           <div style={{ marginTop:8, fontSize:12, color:'var(--acc-critical)', fontFamily:'var(--font-mono)' }}>
@@ -134,7 +134,7 @@ export default function AddIssue({ state, dispatch, onNav, hasSupabase }: AddIss
         <div className="row between" style={{ marginTop:20 }}>
           <span className="mono faint" style={{ fontSize:11 }}>
             * บันทึกเป็นเดือน {monthLabel(state.currentMonth).toUpperCase()}
-            {!hasSupabase && ' · LOCAL ONLY'}
+            {!hasSupabase && ' · บันทึกเฉพาะเครื่อง'}
           </span>
           <div className="row tight">
             <button className="btn btn-ghost" onClick={() => onNav('dashboard')}>ยกเลิก</button>
