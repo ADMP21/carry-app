@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import type { Issue, Group, ReviewResult } from '@/types'
 import { monthLabel } from '@/lib/utils'
 import PhotoTile from '@/components/ui/PhotoTile'
+import WaxSeal from '@/components/ui/WaxSeal'
 
 interface SwipeDeckProps {
   issues: Issue[]
@@ -204,12 +205,8 @@ export default function SwipeDeck({ issues, groupsById, currentMonth, onComplete
               >
                 {isTop && (
                   <>
-                    <div className="stamp left"  style={{opacity: stampLeftOp}}>
-                      <span>แก้ไข</span><br/><span>แล้ว</span>
-                    </div>
-                    <div className="stamp right" style={{opacity: stampRightOp}}>
-                      <span>ยังไม่</span><br/><span>ได้แก้ไข</span>
-                    </div>
+                    <WaxSeal variant="resolved" opacity={stampLeftOp}  />
+                    <WaxSeal variant="carry"    opacity={stampRightOp} />
                   </>
                 )}
                 <div className="meta-overlay">
