@@ -471,13 +471,24 @@ button { font: inherit; color: inherit; }
 .swipe-card.gone-right { transition: transform .3s ease, opacity .3s ease; transform: translateX(140%) rotate(18deg) !important; opacity: 0; }
 
 .stamp {
-  position: absolute; top: 22px;
-  font-family: var(--font-mono); font-size: 15px; font-weight: 700; letter-spacing: .06em;
-  padding: 5px 12px; border-radius: 6px; border: 3px solid;
-  pointer-events: none; z-index: 10; transition: opacity .1s;
+  position: absolute;
+  top: 42%; left: 50%;
+  font-family: var(--font-mono); font-size: 30px; font-weight: 900; letter-spacing: .1em;
+  padding: 10px 24px; border-radius: 6px; border: 5px solid;
+  pointer-events: none; z-index: 10;
+  transition: opacity .1s;
+  white-space: nowrap; line-height: 1;
 }
-.stamp.left  { left: 20px; color: var(--acc-resolved); border-color: var(--acc-resolved); }
-.stamp.right { right: 20px; color: var(--acc-carry); border-color: var(--acc-carry); }
+.stamp.left  {
+  color: var(--acc-resolved); border-color: var(--acc-resolved);
+  transform: translate(-50%, -50%) rotate(-14deg);
+  text-shadow: 0 0 24px color-mix(in srgb, var(--acc-resolved) 40%, transparent);
+}
+.stamp.right {
+  color: var(--acc-carry); border-color: var(--acc-carry);
+  transform: translate(-50%, -50%) rotate(14deg);
+  text-shadow: 0 0 24px color-mix(in srgb, var(--acc-carry) 40%, transparent);
+}
 
 .meta-overlay { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; gap: 6px; z-index: 5; pointer-events: none; }
 .swipe-card .photo { flex: 1; overflow: hidden; position: relative; min-height: 0; }
