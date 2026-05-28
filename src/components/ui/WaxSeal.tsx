@@ -1,23 +1,25 @@
 'use client'
-// src/components/ui/WaxSeal.tsx — ตราประทับยางสไตล์ VISA
+// src/components/ui/WaxSeal.tsx — ตราประทับยาง VISA style (v4)
 
 // ── Config ────────────────────────────────────────────────────────────────
 const V = {
   resolved: {
-    color:   '#1b7a3a',                    // เขียวเข้ม
-    arcTop:  '★  แก้ไขเรียบร้อย  ★',
-    arcBot:  '★  แก้ไขเรียบร้อย  ★',
-    lines:   ['แก้ไข', 'แล้ว'],
-    rot:     -15,
-    seed:    7,
+    color:  '#0f6b28',           // เขียวเข้ม
+    glow:   'rgba(0,80,20,0.18)',
+    arcTop: '★  แก้ไขเรียบร้อย  ★',
+    arcBot: '★  แก้ไขเรียบร้อย  ★',
+    lines:  ['แก้ไข', 'แล้ว'],
+    rot:    -16,
+    seed:   5,
   },
   carry: {
-    color:   '#c41414',                    // แดงเข้ม
-    arcTop:  '★  ยังไม่แก้ไข  ★',
-    arcBot:  '★  ยังไม่แก้ไข  ★',
-    lines:   ['ยังไม่', 'แก้ไข'],
-    rot:     15,
-    seed:    19,
+    color:  '#c01010',           // แดงเข้ม
+    glow:   'rgba(120,0,0,0.18)',
+    arcTop: '★  ยังไม่แก้ไข  ★',
+    arcBot: '★  ยังไม่แก้ไข  ★',
+    lines:  ['ยังไม่', 'แก้ไข'],
+    rot:    16,
+    seed:   17,
   },
 } as const
 type Variant = keyof typeof V
@@ -27,33 +29,34 @@ export default function WaxSeal({ variant, opacity }: { variant: Variant; opacit
   const v  = V[variant]
   const id = variant
 
-  // ขนาดและตำแหน่ง (viewBox 180×180, center 90,90)
-  const cx = 90, cy = 90
-  const rOuter = 81   // วงนอก
-  const rInner = 71   // วงใน
-  const rTopTxt = rInner        // baseline ข้อความบน (tops ชี้ออกนอก)
-  const rBotTxt = rOuter - 1   // baseline ข้อความล่าง (tops ชี้เข้าใน)
+  // ขนาดและตำแหน่ง — viewBox 200×200, center 100,100
+  const cx = 100, cy = 100
+  const rOuter = 90          // วงนอก
+  const rInner = 78          // วงใน  (แบนด์กว้าง 12px)
+  const rBand  = (rOuter + rInner) / 2  // กึ่งกลางแบนด์ = 84
 
-  // SVG arc paths สำหรับ textPath
-  // บน: counter-clockwise (sweep=0) → ข้อความวิ่งซ้าย→ขวาบนส่วนบน, tops ชี้ออกนอก
-  const topArcD = `M ${cx - rTopTxt},${cy} A ${rTopTxt},${rTopTxt} 0 0 0 ${cx + rTopTxt},${cy}`
-  // ล่าง: clockwise (sweep=1) → ข้อความวิ่งซ้าย→ขวาส่วนล่าง, tops ชี้เข้าหาศูนย์กลาง
-  const botArcD = `M ${cx - rBotTxt},${cy} A ${rBotTxt},${rBotTxt} 0 0 1 ${cx + rBotTxt},${cy}`
+  // textPath: ข้อความบน — CCW (sweep=0), tops ชี้ออกนอก, baseline ≈ rInner
+  const topArcD = `M ${cx - rInner},${cy} A ${rInner},${rInner} 0 0 0 ${cx + rInner},${cy}`
+  // textPath: ข้อความล่าง — CW (sweep=1), tops ชี้เข้าศูนย์, baseline ≈ rOuter
+  const botArcD = `M ${cx - rOuter},${cy} A ${rOuter},${rOuter} 0 0 1 ${cx + rOuter},${cy}`
 
-  const fontMain = "'Prompt','Sarabun','Arial Black','Arial',sans-serif"
-  const fontArc  = "'Sarabun','Prompt','Arial',sans-serif"
+  const fontBold = "system-ui,'Segoe UI',Tahoma,'Arial',sans-serif"
 
   return (
     <svg
-      width="230" height="230" viewBox="0 0 180 180"
+      width="260" height="260" viewBox="0 0 200 200"
       style={{
-        position: 'absolute', top: '42%', left: '50%',
-        transform: `translate(-50%,-50%) rotate(${v.rot}deg)`,
+        position:     'absolute',
+        top:          '42%',
+        left:         '50%',
+        transform:    `translate(-50%,-50%) rotate(${v.rot}deg)`,
         opacity,
-        pointerEvents: 'none',
-        zIndex: 10,
-        transition: 'opacity .18s',
-        overflow: 'visible',
+        pointerEvents:'none',
+        zIndex:       10,
+        transition:   'opacity .18s',
+        overflow:     'visible',
+        // drop-shadow รอบตราทั้งหมด
+        filter: `drop-shadow(0 4px 12px rgba(0,0,0,0.40)) drop-shadow(0 1px 3px rgba(0,0,0,0.25))`,
       }}
     >
       <defs>
@@ -61,90 +64,107 @@ export default function WaxSeal({ variant, opacity }: { variant: Variant; opacit
         <path id={`ta-${id}`} d={topArcD}/>
         <path id={`ba-${id}`} d={botArcD}/>
 
-        {/* Clip ให้เส้นแบนเนอร์ไม่ล้นวงนอก */}
+        {/* Clip สำหรับเส้นแบนเนอร์ */}
         <clipPath id={`cp-${id}`}>
           <circle cx={cx} cy={cy} r={rOuter + 1}/>
         </clipPath>
 
-        {/* ── filter: stamp grunge ────────────────────────────────────
-            1) displacementMap → ขอบขรุขระเหมือนยางกด
-            2) feTurbulence threshold → รอยสึก / หมึกขาด                */}
-        <filter id={`stamp-${id}`}
-          x="-12%" y="-12%" width="124%" height="124%"
+        {/* ── Filter A: grunge สำหรับวงกลมและเส้น (ไม่ใช้กับตัวหนังสือ) ──
+            feDisplacementMap = ขอบขรุขระ (scale เล็กน้อย)
+            feTurbulence erosion = รอยหมึกสึกเล็กน้อย                        */}
+        <filter id={`gr-${id}`} x="-8%" y="-8%" width="116%" height="116%"
           colorInterpolationFilters="sRGB">
-
-          {/* noise สำหรับ displacement (ขอบไม่ตรง) */}
           <feTurbulence type="fractalNoise"
-            baseFrequency="0.022" numOctaves="3"
-            seed={v.seed} result="disp"/>
+            baseFrequency="0.025 0.028" numOctaves="4"
+            seed={v.seed} result="dn"/>
           <feDisplacementMap
-            in="SourceGraphic" in2="disp"
-            scale="2.2" xChannelSelector="R" yChannelSelector="G"
-            result="distorted"/>
-
-          {/* noise สำหรับ erosion (รอยสึกหมึก) */}
+            in="SourceGraphic" in2="dn"
+            scale="2.5" xChannelSelector="R" yChannelSelector="G"
+            result="warped"/>
           <feTurbulence type="fractalNoise"
-            baseFrequency="0.055" numOctaves="5"
-            seed={v.seed + 8} result="erode"/>
-          <feColorMatrix in="erode" type="matrix" result="emask"
-            values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 3.8 -1.2"/>
+            baseFrequency="0.07" numOctaves="4"
+            seed={v.seed + 9} result="en"/>
+          <feColorMatrix in="en" type="matrix" result="emask"
+            values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 6 -3.5"/>
+          <feComposite operator="in" in="warped" in2="emask"/>
+        </filter>
 
-          {/* ใช้ erosion mask ตัดทอน distorted source */}
-          <feComposite operator="in" in="distorted" in2="emask"/>
+        {/* ── Filter B: white-halo สำหรับตัวหนังสือให้อ่านง่ายบนรูปใดก็ได้ ── */}
+        <filter id={`hl-${id}`} x="-15%" y="-30%" width="130%" height="160%"
+          colorInterpolationFilters="sRGB">
+          {/* ขยาย alpha ออกไปก่อน */}
+          <feMorphology in="SourceAlpha" operator="dilate" radius="3" result="fat"/>
+          {/* blur เบาๆ */}
+          <feGaussianBlur in="fat" stdDeviation="2" result="hblur"/>
+          {/* ระบายสีขาวใส่ halo */}
+          <feFlood floodColor="white" floodOpacity="0.85" result="wh"/>
+          <feComposite in="wh" in2="hblur" operator="in" result="halo"/>
+          {/* วางข้อความทับบน halo */}
+          <feMerge>
+            <feMergeNode in="halo"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
         </filter>
       </defs>
 
-      {/* ── ทุกอย่างใช้สีเดียว + filter grunge ── */}
-      <g fill={v.color} stroke={v.color} filter={`url(#stamp-${id})`}>
+      {/* ══════════════════════════════════════════════
+          Layer 1: วงกลมและเส้นแบนเนอร์ — ใช้ grunge
+      ══════════════════════════════════════════════ */}
+      <g stroke={v.color} fill="none" filter={`url(#gr-${id})`}>
+        {/* วงนอก */}
+        <circle cx={cx} cy={cy} r={rOuter} strokeWidth="6"/>
+        {/* วงใน */}
+        <circle cx={cx} cy={cy} r={rInner} strokeWidth="2.2"/>
+        {/* เส้นแบนเนอร์บน */}
+        <line
+          x1={cx - rOuter - 8} y1={cy - 24}
+          x2={cx + rOuter + 8} y2={cy - 24}
+          strokeWidth="2.8" clipPath={`url(#cp-${id})`}/>
+        {/* เส้นแบนเนอร์ล่าง */}
+        <line
+          x1={cx - rOuter - 8} y1={cy + 24}
+          x2={cx + rOuter + 8} y2={cy + 24}
+          strokeWidth="2.8" clipPath={`url(#cp-${id})`}/>
+      </g>
 
-        {/* วงนอก (หนา) */}
-        <circle cx={cx} cy={cy} r={rOuter}
-          fill="none" strokeWidth="5.5"/>
-
-        {/* วงใน (บาง) */}
-        <circle cx={cx} cy={cy} r={rInner}
-          fill="none" strokeWidth="2"/>
-
-        {/* ── ข้อความโค้งขอบบน ── */}
-        <text fontSize="10.5" fontWeight="800" fontFamily={fontArc}
-          letterSpacing="1.2" stroke="none">
-          <textPath href={`#ta-${id}`} startOffset="50%" textAnchor="middle">
+      {/* ══════════════════════════════════════════════
+          Layer 2: ข้อความโค้งขอบ — white-halo, ไม่มี grunge
+      ══════════════════════════════════════════════ */}
+      <g fill={v.color} filter={`url(#hl-${id})`}>
+        {/* ข้อความบน */}
+        <text
+          fontSize="12" fontWeight="800" fontFamily={fontBold}
+          letterSpacing="1.8">
+          <textPath href={`#ta-${id}`} startOffset="50%" textAnchor="middle" dy="2">
             {v.arcTop}
           </textPath>
         </text>
-
-        {/* ── ข้อความโค้งขอบล่าง ── */}
-        <text fontSize="10.5" fontWeight="800" fontFamily={fontArc}
-          letterSpacing="1.2" stroke="none">
-          <textPath href={`#ba-${id}`} startOffset="50%" textAnchor="middle"
-            dy="2">
+        {/* ข้อความล่าง */}
+        <text
+          fontSize="12" fontWeight="800" fontFamily={fontBold}
+          letterSpacing="1.8">
+          <textPath href={`#ba-${id}`} startOffset="50%" textAnchor="middle" dy="-2">
             {v.arcBot}
           </textPath>
         </text>
+      </g>
 
-        {/* ── เส้นแบนเนอร์คู่ (แนวนอน ± 22px จากจุดศูนย์) ── */}
-        <line
-          x1={cx - rOuter - 8} y1={cy - 22}
-          x2={cx + rOuter + 8} y2={cy - 22}
-          strokeWidth="2.2" clipPath={`url(#cp-${id})`}/>
-        <line
-          x1={cx - rOuter - 8} y1={cy + 22}
-          x2={cx + rOuter + 8} y2={cy + 22}
-          strokeWidth="2.2" clipPath={`url(#cp-${id})`}/>
-
-        {/* ── ตัวอักษรใหญ่ตรงกลาง (bold ตัดขอบคมเหมือน VISA stamp) ── */}
+      {/* ══════════════════════════════════════════════
+          Layer 3: ตัวอักษรใหญ่กลางตรา — white-halo, ไม่มี grunge
+      ══════════════════════════════════════════════ */}
+      <g filter={`url(#hl-${id})`}>
         {v.lines.map((line, i) => {
-          const y = cy + i * 28 - ((v.lines.length - 1) * 28) / 2
+          const y = cy + i * 30 - ((v.lines.length - 1) * 30) / 2
           return (
             <text key={i}
               x={cx} y={y}
               textAnchor="middle"
               dominantBaseline="middle"
-              stroke="none"
-              fontSize="33"
+              fill={v.color}
+              fontSize="36"
               fontWeight="900"
-              fontFamily={fontMain}
-              letterSpacing="2"
+              fontFamily={fontBold}
+              letterSpacing="3"
             >
               {line}
             </text>
