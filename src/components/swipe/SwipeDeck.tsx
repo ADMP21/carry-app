@@ -24,9 +24,9 @@ export default function SwipeDeck({ issues, groupsById, currentMonth, onComplete
   const top        = topId ? issuesById[topId] : null
 
   // ── DOM refs — no React state during drag ──────────────────────────────
-  const cardRef   = useRef<HTMLDivElement>(null)   // top card element
-  const sealLRef  = useRef<HTMLDivElement>(null)   // wrapper div for left stamp
-  const sealRRef  = useRef<HTMLDivElement>(null)   // wrapper div for right stamp
+  const cardRef   = useRef<HTMLDivElement>(null)    // top card element
+  const sealLRef  = useRef<SVGSVGElement>(null)     // SVG ของ resolved stamp
+  const sealRRef  = useRef<SVGSVGElement>(null)     // SVG ของ carry stamp
 
   // mutable refs — zero allocations per frame
   const drag       = useRef({ active: false, startX: 0, startY: 0 })
@@ -277,22 +277,12 @@ export default function SwipeDeck({ issues, groupsById, currentMonth, onComplete
                   pointerEvents: 'none',
                 }}
               >
-                {/* Stamps — ทั้งสองมี will-change:opacity = GPU layer แยกตัว
-                    เปลี่ยน opacity ไม่ repaint card texture เลย            */}
+                {/* Stamps — ref ตรงไปที่ SVG element, ไม่มี wrapper div
+                    ไม่มีปัญหา stacking context / z-index                   */}
                 {isTop && (
                   <>
-                    <div ref={sealLRef} style={{
-                      opacity: 0, pointerEvents: 'none',
-                      willChange: 'opacity',   // GPU layer แยก — ไม่ repaint card texture
-                    }}>
-                      <WaxSeal variant="resolved" opacity={1}/>
-                    </div>
-                    <div ref={sealRRef} style={{
-                      opacity: 0, pointerEvents: 'none',
-                      willChange: 'opacity',
-                    }}>
-                      <WaxSeal variant="carry" opacity={1}/>
-                    </div>
+                    <WaxSeal ref={sealLRef} variant="resolved" opacity={0}/>
+                    <WaxSeal ref={sealRRef} variant="carry"    opacity={0}/>
                   </>
                 )}
 

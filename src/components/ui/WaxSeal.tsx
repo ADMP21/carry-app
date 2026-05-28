@@ -1,5 +1,6 @@
 'use client'
-// src/components/ui/WaxSeal.tsx — ตราประทับยาง VISA style (v4)
+// src/components/ui/WaxSeal.tsx — ตราประทับยาง VISA style
+import { forwardRef } from 'react'
 
 // ── Config ────────────────────────────────────────────────────────────────
 const V = {
@@ -25,7 +26,9 @@ const V = {
 type Variant = keyof typeof V
 
 // ── Component ─────────────────────────────────────────────────────────────
-export default function WaxSeal({ variant, opacity }: { variant: Variant; opacity: number }) {
+// forwardRef → SwipeDeck อัพเดต opacity บน SVG element โดยตรง (ไม่ผ่าน React state)
+const WaxSeal = forwardRef<SVGSVGElement, { variant: Variant; opacity: number }>(
+function WaxSeal({ variant, opacity }, ref) {
   const v  = V[variant]
   const id = variant
 
@@ -44,6 +47,7 @@ export default function WaxSeal({ variant, opacity }: { variant: Variant; opacit
 
   return (
     <svg
+      ref={ref}
       width="260" height="260" viewBox="0 0 200 200"
       style={{
         position:     'absolute',
@@ -53,9 +57,8 @@ export default function WaxSeal({ variant, opacity }: { variant: Variant; opacit
         opacity,
         pointerEvents:'none',
         zIndex:       10,
-        transition:   'opacity .18s',
+        transition:   'none',   // transition ควบคุมจาก SwipeDeck โดยตรง
         overflow:     'visible',
-        // drop-shadow รอบตราทั้งหมด
         filter: `drop-shadow(0 4px 12px rgba(0,0,0,0.40)) drop-shadow(0 1px 3px rgba(0,0,0,0.25))`,
       }}
     >
@@ -169,4 +172,7 @@ export default function WaxSeal({ variant, opacity }: { variant: Variant; opacit
       </g>
     </svg>
   )
-}
+})
+
+WaxSeal.displayName = 'WaxSeal'
+export default WaxSeal
