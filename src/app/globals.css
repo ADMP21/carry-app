@@ -470,24 +470,58 @@ button { font: inherit; color: inherit; }
 .swipe-card.gone-left  { transition: transform .3s ease, opacity .3s ease; transform: translateX(-140%) rotate(-18deg) !important; opacity: 0; }
 .swipe-card.gone-right { transition: transform .3s ease, opacity .3s ease; transform: translateX(140%) rotate(18deg) !important; opacity: 0; }
 
+/* ── Wax seal stamp ─────────────────────────────────────── */
 .stamp {
   position: absolute;
-  top: 42%; left: 50%;
-  font-family: var(--font-mono); font-size: 30px; font-weight: 900; letter-spacing: .1em;
-  padding: 10px 24px; border-radius: 6px; border: 5px solid;
+  top: 40%; left: 50%;
+  width: 148px; height: 148px;
+  border-radius: 50%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  font-family: var(--font-mono); font-size: 15px; font-weight: 900;
+  letter-spacing: .12em; line-height: 1.45;
+  padding: 22px; box-sizing: border-box;
   pointer-events: none; z-index: 10;
-  transition: opacity .1s;
-  white-space: nowrap; line-height: 1;
+  transition: opacity .12s;
 }
-.stamp.left  {
-  color: var(--acc-resolved); border-color: var(--acc-resolved);
-  transform: translate(-50%, -50%) rotate(-14deg);
-  text-shadow: 0 0 24px color-mix(in srgb, var(--acc-resolved) 40%, transparent);
+/* resolved — green wax */
+.stamp.left {
+  transform: translate(-50%, -50%) rotate(-13deg);
+  background: radial-gradient(circle at 38% 32%, #3fa868 0%, #145c30 55%, #0b3a1d 100%);
+  color: #c8f5db;
+  border: 2.5px solid rgba(160, 255, 190, 0.28);
+  box-shadow:
+    0 0 0 5px #1b6e38,
+    0 0 0 9px rgba(27, 110, 56, 0.55),
+    0 0 0 13px rgba(27, 110, 56, 0.22),
+    0 0 0 17px rgba(27, 110, 56, 0.08),
+    inset 0 3px 10px rgba(255,255,255,0.12),
+    inset 0 -5px 14px rgba(0,0,0,0.4),
+    0 10px 40px rgba(10, 80, 35, 0.55);
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.15),
+    0 -1px 3px rgba(0,0,0,0.6),
+    0 2px 8px rgba(0,0,0,0.5);
 }
+/* carry — amber/red wax */
 .stamp.right {
-  color: var(--acc-carry); border-color: var(--acc-carry);
-  transform: translate(-50%, -50%) rotate(14deg);
-  text-shadow: 0 0 24px color-mix(in srgb, var(--acc-carry) 40%, transparent);
+  transform: translate(-50%, -50%) rotate(13deg);
+  background: radial-gradient(circle at 38% 32%, #d4821a 0%, #7a3300 55%, #4a1800 100%);
+  color: #fde5b8;
+  border: 2.5px solid rgba(255, 200, 100, 0.25);
+  box-shadow:
+    0 0 0 5px #9e4a08,
+    0 0 0 9px rgba(158, 74, 8, 0.55),
+    0 0 0 13px rgba(158, 74, 8, 0.22),
+    0 0 0 17px rgba(158, 74, 8, 0.08),
+    inset 0 3px 10px rgba(255,255,255,0.10),
+    inset 0 -5px 14px rgba(0,0,0,0.4),
+    0 10px 40px rgba(100, 40, 0, 0.55);
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.12),
+    0 -1px 3px rgba(0,0,0,0.6),
+    0 2px 8px rgba(0,0,0,0.5);
 }
 
 .meta-overlay { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; gap: 6px; z-index: 5; pointer-events: none; }
