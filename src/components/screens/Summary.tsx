@@ -21,7 +21,7 @@ function Donut({ resolved, carry, size = 160 }: { resolved: number; carry: numbe
     <div style={{width:size, height:size, background:bg, borderRadius:'50%', position:'relative', flexShrink:0}}>
       <div style={{position:'absolute', inset:18, background:'var(--bg-elev)', borderRadius:'50%', border:'1px solid var(--line)', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center'}}>
         <div style={{fontSize:20, fontWeight:700, fontFamily:'var(--font-display)'}}>{Math.round(resolved / total * 100)}%</div>
-        <div style={{fontSize:10, color:'var(--fg-faint)', fontFamily:'var(--font-mono)'}}>resolved</div>
+        <div style={{fontSize:10, color:'var(--fg-faint)', fontFamily:'var(--font-mono)'}}>แก้ไขแล้ว</div>
       </div>
     </div>
   )
@@ -53,31 +53,31 @@ export default function Summary({ state, onNav }: SummaryProps) {
             >{monthLabel(mk)}</button>
           ))}
         </div>
-        <button className="btn btn-sm">Export PDF ↓</button>
+        <button className="btn btn-sm">ออกรายงาน PDF ↓</button>
       </div>
 
       <div className="kpi-grid">
         <div className="kpi">
           <div className="kpi-accent" style={{background:'var(--fg)'}}/>
-          <div className="kpi-label">Reviewed</div>
+          <div className="kpi-label">รีวิวแล้ว</div>
           <div className="kpi-value">{totalReviewed}</div>
           <div className="kpi-sub">รวมเคสที่ถูกรีวิวเดือนนี้</div>
         </div>
         <div className="kpi">
           <div className="kpi-accent" style={{background:'var(--acc-resolved)'}}/>
-          <div className="kpi-label">Resolved</div>
+          <div className="kpi-label">แก้ไขแล้ว</div>
           <div className="kpi-value" style={{color:'var(--acc-resolved)'}}>{resolved.length}</div>
           <div className="kpi-sub">ปิดเคสสำเร็จ</div>
         </div>
         <div className="kpi">
           <div className="kpi-accent" style={{background:'var(--acc-carry)'}}/>
-          <div className="kpi-label">Carry over</div>
+          <div className="kpi-label">ค้างข้ามเดือน</div>
           <div className="kpi-value" style={{color:'var(--acc-carry)'}}>{carried.length}</div>
           <div className="kpi-sub">ยกไปเดือนถัดไป</div>
         </div>
         <div className="kpi">
           <div className="kpi-accent" style={{background:'var(--acc-info)'}}/>
-          <div className="kpi-label">Newly added</div>
+          <div className="kpi-label">เพิ่มใหม่เดือนนี้</div>
           <div className="kpi-value">{newly.length}</div>
           <div className="kpi-sub">รายงานใหม่เดือนนี้</div>
         </div>
@@ -85,12 +85,12 @@ export default function Summary({ state, onNav }: SummaryProps) {
 
       <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:18, marginTop:18}}>
         <div className="card">
-          <h3 className="section-title">Completion rate</h3>
+          <h3 className="section-title">อัตราการแก้ไข</h3>
           <div style={{display:'flex', alignItems:'center', gap:28, padding:'10px 6px'}}>
             <Donut resolved={resolved.length} carry={carried.length}/>
             <div style={{flex:1}}>
               <div style={{marginBottom:14}}>
-                <div className="mono faint" style={{fontSize:11, letterSpacing:'.12em'}}>OVERVIEW</div>
+                <div className="mono faint" style={{fontSize:11, letterSpacing:'.08em'}}>ภาพรวม</div>
                 <div style={{fontSize:14, lineHeight:1.5, marginTop:6}}>
                   เดือน <strong>{monthLabelTh(pickedMonth)}</strong> รีวิวไปทั้งหมด {totalReviewed} เคส,
                   ปิดสำเร็จ <strong style={{color:'var(--acc-resolved)'}}>{resolved.length}</strong> เคส
@@ -98,12 +98,12 @@ export default function Summary({ state, onNav }: SummaryProps) {
                 </div>
               </div>
               <div className="bar-row">
-                <div className="label">Resolved</div>
+                <div className="label">แก้ไขแล้ว</div>
                 <div className="bar-track"><div className="bar-fill" style={{width:`${totalReviewed ? resolved.length / totalReviewed * 100 : 0}%`, '--tone':'var(--acc-resolved)'} as React.CSSProperties}/></div>
                 <div className="bar-val mono">{resolved.length}</div>
               </div>
               <div className="bar-row">
-                <div className="label">Carry over</div>
+                <div className="label">ค้างข้ามเดือน</div>
                 <div className="bar-track"><div className="bar-fill" style={{width:`${totalReviewed ? carried.length / totalReviewed * 100 : 0}%`, '--tone':'var(--acc-carry)'} as React.CSSProperties}/></div>
                 <div className="bar-val mono">{carried.length}</div>
               </div>
@@ -112,7 +112,7 @@ export default function Summary({ state, onNav }: SummaryProps) {
         </div>
 
         <div className="card">
-          <h3 className="section-title">Group breakdown</h3>
+          <h3 className="section-title">แยกตามแผนก</h3>
           {groups.map(g => {
             const r = resolved.filter(i => i.groupId === g.id).length
             const c = carried.filter(i => i.groupId === g.id).length
@@ -147,7 +147,7 @@ export default function Summary({ state, onNav }: SummaryProps) {
       </div>
 
       <div className="card" style={{marginTop:18}}>
-        <h3 className="section-title">Resolved this month · {monthLabel(pickedMonth)}</h3>
+        <h3 className="section-title">ปิดเคสเดือน {monthLabel(pickedMonth)}</h3>
         {resolved.length === 0 && <div style={{fontSize:13, color:'var(--fg-faint)'}}>— ยังไม่มีเคสปิดในเดือนนี้</div>}
         {resolved.map(i => {
           const g = groupsById[i.groupId]
@@ -158,7 +158,7 @@ export default function Summary({ state, onNav }: SummaryProps) {
                 <div className="issue-title">{i.title}</div>
                 <div className="issue-sub"><span className="mono faint">{g.short}</span> · ปิดเคส {monthLabelTh(i.resolvedMonth)}</div>
               </div>
-              <span className="tag resolved"><span className="dot"/>RESOLVED</span>
+              <span className="tag resolved"><span className="dot"/>แก้ไขแล้ว</span>
             </div>
           )
         })}

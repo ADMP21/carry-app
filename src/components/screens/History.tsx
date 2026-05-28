@@ -32,12 +32,12 @@ export default function History({ state, focusId, onNav }: HistoryProps) {
     let [y, m] = cm.split('-').map(Number)
     m += 1; if (m > 12) { m = 1; y += 1 }
     cm = `${y}-${String(m).padStart(2, '0')}`
-    events.push({ month: cm, type: 'carry', label: 'Carry over', detail: 'ยกไปเดือนถัดไป' })
+    events.push({ month: cm, type: 'carry', label: 'ค้างข้ามเดือน', detail: 'ยกไปเดือนถัดไป' })
   }
   if (issue.status === 'resolved') {
-    events.push({ month: issue.resolvedMonth!, type: 'resolved', label: 'Resolved', detail: 'ปิดเคสเรียบร้อย' })
+    events.push({ month: issue.resolvedMonth!, type: 'resolved', label: 'แก้ไขแล้ว', detail: 'ปิดเคสเรียบร้อย' })
   } else {
-    events.push({ month: currentMonth, type: 'carry', label: 'Pending review', detail: 'รอรีวิวรอบปัจจุบัน' })
+    events.push({ month: currentMonth, type: 'carry', label: 'รอรีวิว', detail: 'รอรีวิวรอบปัจจุบัน' })
   }
 
   return (
@@ -45,8 +45,8 @@ export default function History({ state, focusId, onNav }: HistoryProps) {
       {/* Issue list panel */}
       <div className="card" style={{padding:0, overflow:'hidden', maxHeight:'calc(100vh - 200px)', display:'flex', flexDirection:'column'}}>
         <div style={{padding:'14px 18px', borderBottom:'1px solid var(--line)'}}>
-          <h3 className="section-title" style={{margin:0}}>All issues</h3>
-          <div className="mono faint" style={{fontSize:11, marginTop:4}}>{issues.length} TOTAL</div>
+          <h3 className="section-title" style={{margin:0}}>ปัญหาทั้งหมด</h3>
+          <div className="mono faint" style={{fontSize:11, marginTop:4}}>{issues.length} รายการ</div>
         </div>
         <div style={{overflowY:'auto', padding:8, flex:1}}>
           {issues.map(i => {
@@ -88,17 +88,17 @@ export default function History({ state, focusId, onNav }: HistoryProps) {
           <div>
             <div className="row tight">
               <span className="tag" style={{'--tone': g.color} as React.CSSProperties}>{g.short}</span>
-              {issue.carryOverCount > 0 && <span className="tag carry">CARRIED ×{issue.carryOverCount}</span>}
+              {issue.carryOverCount > 0 && <span className="tag carry">ค้างมา ×{issue.carryOverCount}</span>}
               {issue.status === 'resolved'
-                ? <span className="tag resolved"><span className="dot"/>RESOLVED</span>
-                : <span className="tag pending"><span className="dot"/>PENDING</span>
+                ? <span className="tag resolved"><span className="dot"/>แก้ไขแล้ว</span>
+                : <span className="tag pending"><span className="dot"/>รอดำเนินการ</span>
               }
             </div>
             <h2 style={{margin:'10px 0 4px', fontFamily:'var(--font-display)', fontSize:26, fontWeight:600, letterSpacing:'-.01em'}}>
               {issue.title}
             </h2>
             <div className="mono faint" style={{fontSize:11, letterSpacing:'.08em'}}>
-              {issue.id.toUpperCase()} · CREATED {monthLabel(issue.createdMonth).toUpperCase()}
+              {issue.id.toUpperCase()} · บันทึก {monthLabel(issue.createdMonth)}
             </div>
           </div>
           <button className="btn btn-sm" onClick={() => onNav('groups')}>ดูในกลุ่ม →</button>
@@ -107,23 +107,23 @@ export default function History({ state, focusId, onNav }: HistoryProps) {
         <div style={{display:'grid', gridTemplateColumns:'1.1fr .9fr', gap:24}}>
           <div>
             <div style={{aspectRatio:'4/3', borderRadius:14, overflow:'hidden'}}>
-              <PhotoTile seed={issue.photoSeed} tone={g.color} idStr={`#${issue.id.toUpperCase()}`} label={`CREATED ${issue.createdMonth}`} imageUrl={issue.photoUrl}/>
+              <PhotoTile seed={issue.photoSeed} tone={g.color} idStr={`#${issue.id.toUpperCase()}`} label={`บันทึก ${issue.createdMonth}`} imageUrl={issue.photoUrl}/>
             </div>
             <div className="card" style={{marginTop:14, padding:16, background:'var(--bg-soft)', border:'none'}}>
-              <div className="mono faint" style={{fontSize:11, letterSpacing:'.12em', textTransform:'uppercase'}}>Description</div>
+              <div className="mono faint" style={{fontSize:11, letterSpacing:'.08em'}}>รายละเอียด</div>
               <p style={{margin:'6px 0 0', fontSize:14, color:'var(--fg)', lineHeight:1.55}}>{issue.description}</p>
               <div className="h-divider"/>
               <div className="row" style={{gap:24, fontSize:13, color:'var(--fg-soft)'}}>
                 <div>
-                  <div className="mono faint" style={{fontSize:10, letterSpacing:'.1em', textTransform:'uppercase'}}>Reporter</div>
+                  <div className="mono faint" style={{fontSize:10, letterSpacing:'.08em'}}>ผู้รายงาน</div>
                   {issue.reporter}
                 </div>
                 <div>
-                  <div className="mono faint" style={{fontSize:10, letterSpacing:'.1em', textTransform:'uppercase'}}>Carry count</div>
+                  <div className="mono faint" style={{fontSize:10, letterSpacing:'.08em'}}>จำนวนค้าง</div>
                   {issue.carryOverCount}
                 </div>
                 <div>
-                  <div className="mono faint" style={{fontSize:10, letterSpacing:'.1em', textTransform:'uppercase'}}>Last review</div>
+                  <div className="mono faint" style={{fontSize:10, letterSpacing:'.08em'}}>รีวิวล่าสุด</div>
                   {monthLabel(issue.lastReviewMonth)}
                 </div>
               </div>
@@ -131,7 +131,7 @@ export default function History({ state, focusId, onNav }: HistoryProps) {
           </div>
 
           <div>
-            <h3 className="section-title">Resolution timeline</h3>
+            <h3 className="section-title">ไทม์ไลน์การแก้ไข</h3>
             <div className="timeline">
               {events.map((ev, idx) => (
                 <div key={idx} className={`timeline-item ${ev.type}`}>

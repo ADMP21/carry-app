@@ -48,25 +48,25 @@ export default function Dashboard({ state, onStartReview, onNav }: DashboardProp
       <div className="kpi-grid">
         <div className="kpi">
           <div className="kpi-accent" style={{background:'var(--fg)'}}/>
-          <div className="kpi-label">Open issues</div>
+          <div className="kpi-label">ปัญหาที่ยังเปิดอยู่</div>
           <div className="kpi-value">{pending.length}</div>
           <div className="kpi-sub">รอรีวิวเดือนนี้ <span className="mono kpi-delta down">+{newThisMonth.length}</span> ใหม่</div>
         </div>
         <div className="kpi">
           <div className="kpi-accent" style={{background:'var(--acc-resolved)'}}/>
-          <div className="kpi-label">Resolved · MTD</div>
+          <div className="kpi-label">แก้ไขแล้ว · เดือนนี้</div>
           <div className="kpi-value">{resolvedThisMonth.length || 4}</div>
           <div className="kpi-sub">เคลียร์แล้วในเดือน {monthLabelTh(currentMonth)}</div>
         </div>
         <div className="kpi">
           <div className="kpi-accent" style={{background:'var(--acc-carry)'}}/>
-          <div className="kpi-label">Carried over</div>
+          <div className="kpi-label">ค้างข้ามเดือน</div>
           <div className="kpi-value">{carryOver.length}</div>
           <div className="kpi-sub">ค้างเกิน 1 เดือน · ติดตามด่วน</div>
         </div>
         <div className="kpi">
           <div className="kpi-accent" style={{background:'var(--acc-info)'}}/>
-          <div className="kpi-label">Completion · all-time</div>
+          <div className="kpi-label">ความสำเร็จ · รวมทั้งหมด</div>
           <div className="kpi-value">{completionPct}<span style={{fontSize:20, color:'var(--fg-faint)'}}>%</span></div>
           <div className="kpi-sub">{issues.filter(i => i.status==='resolved').length} / {issues.length} เคสรวม</div>
         </div>
@@ -74,9 +74,9 @@ export default function Dashboard({ state, onStartReview, onNav }: DashboardProp
 
       <div className="review-cta">
         <div>
-          <div className="mono" style={{fontSize:11, letterSpacing:'.14em', textTransform:'uppercase', color:'rgba(255,255,255,.6)'}}>End-of-month review · {monthLabel(currentMonth)}</div>
+          <div className="mono" style={{fontSize:11, letterSpacing:'.08em', color:'rgba(255,255,255,.6)'}}>รีวิวสิ้นเดือน · {monthLabel(currentMonth)}</div>
           <h2 className="review-cta-title" style={{marginTop:6}}>ถึงเวลารีวิวปัญหาประจำเดือน</h2>
-          <p className="review-cta-sub">Swipe ซ้ายเพื่อปิดเคส, ขวาเพื่อเลื่อนไปเดือนหน้า · ใช้คีย์บอร์ดได้</p>
+          <p className="review-cta-sub">ปัดซ้ายเพื่อปิดเคส · ปัดขวาเพื่อเลื่อนไปเดือนหน้า · ใช้คีย์บอร์ดได้</p>
         </div>
         <div style={{display:'flex', alignItems:'center', gap:18}}>
           <div className="review-cta-num mono">{pending.length}</div>
@@ -90,15 +90,15 @@ export default function Dashboard({ state, onStartReview, onNav }: DashboardProp
       <div className="dash-grid">
         <div className="card">
           <div className="row between">
-            <h3 className="section-title" style={{margin:0}}>6-month trend</h3>
+            <h3 className="section-title" style={{margin:0}}>แนวโน้ม 6 เดือน</h3>
             <div className="row tight mono" style={{fontSize:11, color:'var(--fg-faint)'}}>
               <span className="row tight">
                 <span style={{width:8, height:8, background:'var(--acc-resolved)', borderRadius:2, display:'inline-block'}}/>
-                Resolved
+                แก้ไขแล้ว
               </span>
               <span className="row tight">
                 <span style={{width:8, height:8, background:'var(--acc-carry)', borderRadius:2, display:'inline-block'}}/>
-                Carry over
+                ค้างข้ามเดือน
               </span>
             </div>
           </div>
@@ -121,7 +121,7 @@ export default function Dashboard({ state, onStartReview, onNav }: DashboardProp
             })}
           </div>
           <div className="h-divider"/>
-          <h3 className="section-title">Open by group</h3>
+          <h3 className="section-title">ปัญหาตามแผนก</h3>
           {groupBreakdown.map(g => (
             <div key={g.id} className="bar-row">
               <div className="label">
@@ -139,7 +139,7 @@ export default function Dashboard({ state, onStartReview, onNav }: DashboardProp
         </div>
 
         <div className="card">
-          <h3 className="section-title">Recent activity</h3>
+          <h3 className="section-title">กิจกรรมล่าสุด</h3>
           {recent.map(i => {
             const g = groupsById[i.groupId]
             return (
@@ -155,11 +155,11 @@ export default function Dashboard({ state, onStartReview, onNav }: DashboardProp
                 </div>
                 <div>
                   {i.status === 'resolved' ? (
-                    <span className="tag resolved"><span className="dot"/>RESOLVED</span>
+                    <span className="tag resolved"><span className="dot"/>แก้ไขแล้ว</span>
                   ) : i.carryOverCount > 0 ? (
                     <span className="tag carry"><span className="dot"/>×{i.carryOverCount}</span>
                   ) : (
-                    <span className="tag pending"><span className="dot"/>PENDING</span>
+                    <span className="tag pending"><span className="dot"/>รอดำเนินการ</span>
                   )}
                 </div>
               </div>

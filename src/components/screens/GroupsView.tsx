@@ -67,7 +67,7 @@ export default function GroupsView({ state, onNav }: GroupsViewProps) {
             }
           </h3>
           <div className="chips">
-            <button className={`chip ${!activeId ? 'is-active' : ''}`} onClick={() => setActiveId(null)}>ALL</button>
+            <button className={`chip ${!activeId ? 'is-active' : ''}`} onClick={() => setActiveId(null)}>ทั้งหมด</button>
             {groups.map(g => (
               <button
                 key={g.id}
@@ -90,7 +90,7 @@ export default function GroupsView({ state, onNav }: GroupsViewProps) {
                 <div className="issue-sub">
                   <span className="mono faint">{g.short}</span>
                   <span className="faint">·</span>
-                  <span>created {monthLabel(i.createdMonth)}</span>
+                  <span>บันทึก {monthLabel(i.createdMonth)}</span>
                   <span className="faint">·</span>
                   <span>{i.reporter}</span>
                 </div>
@@ -100,8 +100,8 @@ export default function GroupsView({ state, onNav }: GroupsViewProps) {
                   <span className="tag carry"><span className="dot"/>×{i.carryOverCount}</span>
                 )}
                 {i.status === 'resolved'
-                  ? <span className="tag resolved"><span className="dot"/>RESOLVED</span>
-                  : <span className="tag pending"><span className="dot"/>PENDING</span>
+                  ? <span className="tag resolved"><span className="dot"/>แก้ไขแล้ว</span>
+                  : <span className="tag pending"><span className="dot"/>รอดำเนินการ</span>
                 }
               </div>
             </div>
